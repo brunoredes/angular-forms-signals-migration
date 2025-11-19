@@ -1,1 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    margin: 0;
+    font-family: Inter, "Helvetica Neue", sans-serif, sans-serif;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+.btn-primary {
+    background: #667eea;
+    color: white;
+
+    &:hover:not(:disabled) {
+        background: #5568d3;
+    }
+}
+
+.btn-secondary {
+    background: #e5e7eb;
+    color: #374151;
+
+    &:hover:not(:disabled) {
+        background: #d1d5db;
+    }
+}
+
+.btn-success {
+    background: #10b981;
+    color: white;
+
+    &:hover:not(:disabled) {
+        background: #059669;
+    }
+}
