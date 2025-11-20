@@ -1,0 +1,40 @@
+@use 'sass:color';
+$color-blue-sky: #2fb9c5; // Bright sky blue
+$color-blue-ocean: #00a6d2; // Deep ocean blue  
+$color-blue-navy: #448ed2; // Rich navy blue
+$color-purple-twilight: #7872be; // Evening sky purple
+$color-purple-sunset: #995297; // Sunset magenta
+$color-red-berry: #a43363; // Accent berry red
+
+// Semantic Color Tokens
+// =====================
+
+// Primary Brand Colors (Trust, Reliability)
+$color-primary: $color-blue-ocean;
+$color-primary-light: $color-blue-sky;
+$color-primary-dark: $color-blue-navy;
+
+// Secondary Colors (Energy, Action)
+$color-secondary: $color-purple-twilight;
+$color-secondary-dark: $color-purple-sunset;
+
+// Accent Colors (Attention, Urgency)
+$color-accent: $color-red-berry;
+$color-accent-alt: $color-purple-sunset;
+
+// Status & Feedback Colors
+$color-success: #27ae60; // Green for confirmations
+$color-warning: #f39c12; // Yellow for warnings
+$color-error: #e74c3c; // Red for errors
+$color-info: $color-blue-sky; // Blue for information
+
+// UI Application Colors
+// =====================
+
+// Background Colors
+$color-bg-primary: #ffffff;
+$color-bg-secondary: #f8f9fa;
+$color-bg-tertiary: #e9ecef;
+$color-bg-brand: $color-primary;
+// $color-bg-brand-subtle: color.adjust($color-primary-light, $lightness 42%);
+$color-bg-overlay: rgba(0, 0, 0, 0.5);
