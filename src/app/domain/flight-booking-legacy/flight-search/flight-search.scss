@@ -1,0 +1,283 @@
+@use '../../../../scss/abstracts/variables' as *;
+
+.flight-booking-container {
+    min-height: 100dvh;
+    background-color: #f1f2f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.booking-card {
+    max-width: 1000px;
+    width: 100%;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.header {
+    background: linear-gradient(135deg, $color-primary-light 0%, $color-primary-dark 100%);
+    color: white;
+    padding: 2rem;
+
+    h1 {
+        margin: 0 0 0.5rem 0;
+        font-size: 2rem;
+    }
+
+    p {
+        margin: 0;
+        opacity: 0.9;
+    }
+}
+
+.progress-steps {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e0e0e0;
+    position: relative;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    position: relative;
+
+    &.active .step-indicator {
+        background: $color-primary-dark;
+        color: white;
+    }
+
+    &.active:has(.step-indicator) .step-title {
+        font-weight: 700;
+        color: #333;
+    }
+
+    &.completed .step-indicator {
+        background: $color-success;
+        color: white;
+    }
+}
+
+.step-indicator {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+    z-index: 1;
+}
+
+.step-title {
+    color: #33333387;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.step-line {
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    width: 100%;
+    height: 2px;
+    background: #e0e0e0;
+    z-index: 0;
+}
+
+// Fieldset reset and styling
+fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+    min-width: 0; // Fix for fieldset sizing issues
+}
+
+legend {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1.5rem;
+    padding: 0;
+    width: 100%;
+}
+
+.form-step {
+    padding: 2rem;
+    min-height: 500px;
+
+    // Nested fieldsets (like passengers, luggage)
+    >fieldset {
+        margin-bottom: 1.5rem;
+
+        >legend {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 0.5rem;
+        }
+    }
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+
+    label {
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: #333;
+    }
+
+    input,
+    select {
+        padding: 0.75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 1rem;
+
+        &:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        &:invalid {
+            border-color: #ef4444;
+        }
+    }
+}
+
+.error {
+    color: #ef4444;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.radio-group {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+
+    label {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        input {
+            margin-right: 0.5rem;
+        }
+    }
+}
+
+.passenger-card,
+.service-card {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    border: 1px solid #e0e0e0;
+
+    legend {
+        font-size: 1.125rem;
+        font-weight: 500;
+        color: #444;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid #d1d5db;
+        padding-bottom: 0.5rem;
+    }
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    cursor: pointer;
+
+    input {
+        margin-right: 1rem;
+        margin-top: 0.25rem;
+    }
+
+    strong {
+        display: block;
+        margin-bottom: 0.25rem;
+    }
+
+    p {
+        margin: 0;
+        color: #666;
+        font-size: 0.875rem;
+    }
+}
+
+.payment-method-form {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid #e0e0e0;
+}
+
+.pix-info,
+.boleto-info {
+    margin-top: 2rem;
+    padding: 1rem;
+    background: #f0f9ff;
+    border-left: 4px solid #3b82f6;
+    border-radius: 4px;
+
+    p {
+        margin: 0 0 0.5rem 0;
+        font-weight: 600;
+        color: #1e40af;
+    }
+
+    ol,
+    ul {
+        margin: 0.5rem 0 0 0;
+        padding-left: 1.5rem;
+        color: #1e3a8a;
+
+        li {
+            margin-bottom: 0.25rem;
+        }
+    }
+}
+
+.navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem 2rem;
+    background: #f8f9fa;
+    border-top: 1px solid #e0e0e0;
+
+    button {
+        padding: 0.75rem 2rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    }
+}

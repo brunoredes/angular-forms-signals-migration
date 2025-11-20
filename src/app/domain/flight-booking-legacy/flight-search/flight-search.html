@@ -1,0 +1,444 @@
+<div class="flight-booking-container">
+  <div class="booking-card">
+    <!-- Header -->
+    <div class="header">
+      <h1>Flight Booking System</h1>
+      <p>Angular Reactive Forms Implementation</p>
+    </div>
+
+    <!-- Progress Steps -->
+    <ol class="progress-steps">
+      @for (step of steps; track $index; let count = $count) {
+      <li class="step" [class.active]="$index === currentStep" [class.completed]="$index < currentStep"
+        [attr.aria-current]="$index === currentStep ? 'step' : null"
+        [attr.aria-label]="'step ' + ($index + 1) + ' : ' + count">
+        <div class="step-indicator">
+          <span class="material-icons">{{$index + 1}}</span>
+        </div>
+        <span class="step-title">{{ step }}</span>
+        @if($index < steps.length - 1) { <div class="step-line">
+  </div>
+  }
+  </li>
+  }
+  </ol>
+
+  <!-- Form Content -->
+  <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+
+    <!-- Step 1: Flight Details -->
+    @if (currentStep === 0) {
+    <fieldset class="form-step" formGroupName="flightDetails">
+      <legend>Flight Details</legend>
+
+      <div class="radio-group">
+        <label>
+          <input type="radio" id="roundtrip" formControlName="flightType" value="roundtrip" aria-label="Round trip">
+          Round Trip
+        </label>
+        <label>
+          <input type="radio" id="oneway" formControlName="flightType" value="oneway" aria-label="One way">
+          One Way
+        </label>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="origin">Origin *</label>
+          <input type="text" id="origin" formControlName="origin" placeholder="From"
+            aria-label="Insert the origin airport acronym with 3 letters" aria-errormessage="originError"
+            aria-required="true" [attr.aria-invalid]="isFieldInvalid(flightDetailsGroup.get('origin'))">
+          <span class="error" *ngIf="isFieldInvalid(flightDetailsGroup.get('origin'))" id="originError"
+            aria-live="assertive" aria-busy="true" aria-atomic="true" role="status">
+            {{ getFieldError(flightDetailsGroup.get('origin')) }}
+          </span>
+        </div>
+        <div class="form-field">
+          <label for="destination">Destination *</label>
+          <input type="text" id="destination" formControlName="destination" placeholder="Where to?" required aria-required="true"
+            aria-label="Insert the destination airport acronym with 3 letters" aria-errormessage="destinationError"
+            [attr.aria-invalid]="isFieldInvalid(flightDetailsGroup.get('destination'))">
+          <span class="error" *ngIf="isFieldInvalid(flightDetailsGroup.get('destination'))" id="destinationError"
+            aria-live="assertive" aria-busy="true" aria-atomic="true" role="status">
+            {{ getFieldError(flightDetailsGroup.get('destination')) }}
+          </span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="departureDate">Departure Date *</label>
+          <input type="date" id="departureDate" formControlName="departureDate">
+          <span class="error" *ngIf="isFieldInvalid(flightDetailsGroup.get('departureDate'))">
+            {{ getFieldError(flightDetailsGroup.get('departureDate')) }}
+          </span>
+        </div>
+        <div class="form-field" *ngIf="flightDetailsGroup.get('flightType')?.value === 'roundtrip'">
+          <label for="returnDate">Return Date *</label>
+          <input type="date" id="returnDate" formControlName="returnDate">
+          <span class="error" *ngIf="flightDetailsGroup.errors?.['returnDateRequired']">
+            Return date is required for round trip
+          </span>
+          <span class="error" *ngIf="flightDetailsGroup.errors?.['returnDateInvalid']">
+            Return date must be after departure date
+          </span>
+        </div>
+      </div>
+
+      <fieldset formGroupName="passengers">
+        <legend>Passengers</legend>
+        <div class="form-row">
+          <div class="form-field">
+            <label>Adults (12+) *</label>
+            <input type="number" formControlName="adults" min="1" max="9">
+          </div>
+          <div class="form-field">
+            <label>Children (2-11)</label>
+            <input type="number" formControlName="children" min="0" max="9">
+          </div>
+          <div class="form-field">
+            <label>Infants (0-2)</label>
+            <input type="number" formControlName="infants" min="0" max="9">
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="form-field">
+        <label>Class *</label>
+        <select formControlName="class">
+          <option value="economy">Economy</option>
+          <option value="premium">Premium Economy</option>
+          <option value="business">Business</option>
+          <option value="first">First Class</option>
+        </select>
+      </div>
+    </fieldset>
+    }
+
+    <!-- Step 2: Passenger Information -->
+    <fieldset *ngIf="currentStep === 1" class="form-step" formArrayName="passengerDetails">
+      <legend>Passenger Information</legend>
+
+      <fieldset *ngFor="let passenger of passengerDetailsArray.controls; let i = index" class="passenger-card"
+        [formGroupName]="i">
+        <legend>Passenger {{ i + 1 }} ({{ passenger.get('type')?.value }})</legend>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label>First Name *</label>
+            <input type="text" formControlName="firstName">
+            <span class="error" *ngIf="isFieldInvalid(getPassengerControl(i, 'firstName'))">
+              {{ getFieldError(getPassengerControl(i, 'firstName')) }}
+            </span>
+          </div>
+          <div class="form-field">
+            <label>Last Name *</label>
+            <input type="text" formControlName="lastName">
+            <span class="error" *ngIf="isFieldInvalid(getPassengerControl(i, 'lastName'))">
+              {{ getFieldError(getPassengerControl(i, 'lastName')) }}
+            </span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label>Date of Birth *</label>
+            <input type="date" formControlName="dateOfBirth">
+            <span class="error" *ngIf="isFieldInvalid(getPassengerControl(i, 'dateOfBirth'))">
+              {{ getFieldError(getPassengerControl(i, 'dateOfBirth')) }}
+            </span>
+          </div>
+          <div class="form-field">
+            <label>Gender *</label>
+            <select formControlName="gender">
+              <option value="">Select...</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+            <span class="error" *ngIf="isFieldInvalid(getPassengerControl(i, 'gender'))">
+              {{ getFieldError(getPassengerControl(i, 'gender')) }}
+            </span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label>Passport Number *</label>
+            <input type="text" formControlName="passport" placeholder="ABC123456">
+            <span class="error" *ngIf="isFieldInvalid(getPassengerControl(i, 'passport'))">
+              {{ getFieldError(getPassengerControl(i, 'passport')) }}
+            </span>
+          </div>
+          <div class="form-field">
+            <label>Nationality *</label>
+            <input type="text" formControlName="nationality">
+            <span class="error" *ngIf="isFieldInvalid(getPassengerControl(i, 'nationality'))">
+              {{ getFieldError(getPassengerControl(i, 'nationality')) }}
+            </span>
+          </div>
+        </div>
+      </fieldset>
+    </fieldset>
+
+    <!-- Step 3: Services -->
+    <fieldset *ngIf="currentStep === 2" class="form-step" formGroupName="services">
+      <legend>Additional Services</legend>
+
+      <fieldset class="service-card" formGroupName="luggage">
+        <legend>Luggage</legend>
+        <div class="form-row">
+          <div class="form-field">
+            <label>Checked Bags</label>
+            <input type="number" formControlName="checkedBags" min="0" max="5">
+          </div>
+          <div class="form-field">
+            <label>Carry-on Bags</label>
+            <input type="number" formControlName="carryOn" min="1" max="2">
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="service-card">
+        <label class="checkbox-label">
+          <input type="checkbox" formControlName="insurance">
+          <div>
+            <strong>Travel Insurance</strong>
+            <p>Comprehensive coverage for $49.99</p>
+          </div>
+        </label>
+      </div>
+    </fieldset>
+
+    <!-- Step 4: Payment -->
+    <fieldset *ngIf="currentStep === 3" class="form-step" formGroupName="payment">
+      <legend>Payment Information</legend>
+
+      <div class="form-field">
+        <label>Payment Method *</label>
+        <select formControlName="method">
+          <option value="">Select payment method...</option>
+          <option value="credit">Credit Card</option>
+          <option value="debit">Debit Card</option>
+          <option value="pix">PIX</option>
+          <option value="boleto">Boleto Bancário</option>
+        </select>
+        <span class="error" *ngIf="isFieldInvalid(paymentGroup.get('method'))">
+          {{ getFieldError(paymentGroup.get('method')) }}
+        </span>
+      </div>
+
+      <!-- Credit/Debit Card Form -->
+      <div *ngIf="selectedPaymentMethod === 'credit' || selectedPaymentMethod === 'debit'" class="payment-method-form">
+        <div class="form-field">
+          <label>Card Number *</label>
+          <input type="text" formControlName="cardNumber" maxlength="16" placeholder="1234567890123456">
+          <span class="error" *ngIf="isFieldInvalid(paymentGroup.get('cardNumber'))">
+            {{ getFieldError(paymentGroup.get('cardNumber')) }}
+          </span>
+        </div>
+
+        <div class="form-field">
+          <label>Card Holder Name *</label>
+          <input type="text" formControlName="cardHolder" placeholder="John Doe">
+          <span class="error" *ngIf="isFieldInvalid(paymentGroup.get('cardHolder'))">
+            {{ getFieldError(paymentGroup.get('cardHolder')) }}
+          </span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label>Expiry Date *</label>
+            <input type="text" formControlName="expiryDate" placeholder="MM/YY" maxlength="5">
+            <span class="error" *ngIf="isFieldInvalid(paymentGroup.get('expiryDate'))">
+              {{ getFieldError(paymentGroup.get('expiryDate')) }}
+            </span>
+          </div>
+          <div class="form-field">
+            <label>CVV *</label>
+            <input type="text" formControlName="cvv" maxlength="4" placeholder="123">
+            <span class="error" *ngIf="isFieldInvalid(paymentGroup.get('cvv'))">
+              {{ getFieldError(paymentGroup.get('cvv')) }}
+            </span>
+          </div>
+        </div>
+
+        <fieldset *ngIf="billingAddressGroup" formGroupName="billingAddress">
+          <legend>Billing Address</legend>
+          <div class="form-field">
+            <label>Street *</label>
+            <input type="text" formControlName="street">
+            <span class="error" *ngIf="isFieldInvalid(billingAddressGroup!.get('street'))">
+              {{ getFieldError(billingAddressGroup!.get('street')) }}
+            </span>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label>City *</label>
+              <input type="text" formControlName="city">
+              <span class="error" *ngIf="isFieldInvalid(billingAddressGroup!.get('city'))">
+                {{ getFieldError(billingAddressGroup!.get('city')) }}
+              </span>
+            </div>
+            <div class="form-field">
+              <label>ZIP Code *</label>
+              <input type="text" formControlName="zipCode">
+              <span class="error" *ngIf="isFieldInvalid(billingAddressGroup!.get('zipCode'))">
+                {{ getFieldError(billingAddressGroup!.get('zipCode')) }}
+              </span>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label>Country *</label>
+            <input type="text" formControlName="country">
+            <span class="error" *ngIf="isFieldInvalid(billingAddressGroup!.get('country'))">
+              {{ getFieldError(billingAddressGroup!.get('country')) }}
+            </span>
+          </div>
+        </fieldset>
+      </div>
+
+      <!-- PIX Form -->
+      <div *ngIf="selectedPaymentMethod === 'pix'" class="payment-method-form">
+        <div class="form-field">
+          <label>CPF *</label>
+          <input type="text" formControlName="cpf" placeholder="Full name for PIX">
+          <span class="error" *ngIf="isFieldInvalid(paymentGroup.get('cpf'))">
+            {{ getFieldError(paymentGroup.get('cpf')) }}
+          </span>
+        </div>
+
+        <div class="form-field">
+          <label>Full Name *</label>
+          <input type="text" formControlName="pixName" placeholder="Full name for PIX">
+          <span class="error" *ngIf="isFieldInvalid(paymentGroup.get('pixName'))">
+            {{ getFieldError(paymentGroup.get('pixName')) }}
+          </span>
+        </div>
+
+        <div class="form-field">
+          <label>Email (Optional)</label>
+          <input type="email" formControlName="pixEmail" placeholder="email@example.com">
+          <span class="error" *ngIf="isFieldInvalid(paymentGroup.get('pixEmail'))">
+            {{ getFieldError(paymentGroup.get('pixEmail')) }}
+          </span>
+        </div>
+
+        <div class="pix-info">
+          <p><strong>How it works:</strong></p>
+          <ol>
+            <li>Complete your booking details</li>
+            <li>You'll receive a QR Code</li>
+            <li>Scan with your bank app</li>
+            <li>Confirm payment</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- Boleto Form -->
+      <div *ngIf="selectedPaymentMethod === 'boleto'" class="payment-method-form">
+        <div class="form-field">
+          <label>CPF/CNPJ *</label>
+          <input type="text" formControlName="boletoDocument" placeholder="12345678901 or 12345678901234">
+          <span class="error" *ngIf="isFieldInvalid(paymentGroup.get('boletoDocument'))">
+            {{ getFieldError(paymentGroup.get('boletoDocument')) }}
+          </span>
+        </div>
+
+        <div class="form-field">
+          <label>Full Name *</label>
+          <input type="text" formControlName="boletoName" placeholder="Full name as in document">
+          <span class="error" *ngIf="isFieldInvalid(paymentGroup.get('boletoName'))">
+            {{ getFieldError(paymentGroup.get('boletoName')) }}
+          </span>
+        </div>
+
+        <fieldset *ngIf="boletoAddressGroup" formGroupName="boletoAddress">
+          <legend>Address</legend>
+          <div class="form-row">
+            <div class="form-field" style="grid-column: span 2">
+              <label>Street *</label>
+              <input type="text" formControlName="street">
+              <span class="error" *ngIf="isFieldInvalid(boletoAddressGroup!.get('street'))">
+                {{ getFieldError(boletoAddressGroup!.get('street')) }}
+              </span>
+            </div>
+            <div class="form-field">
+              <label>Number *</label>
+              <input type="text" formControlName="number">
+              <span class="error" *ngIf="isFieldInvalid(boletoAddressGroup!.get('number'))">
+                {{ getFieldError(boletoAddressGroup!.get('number')) }}
+              </span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label>Complement</label>
+              <input type="text" formControlName="complement" placeholder="Apt, Suite, etc.">
+            </div>
+            <div class="form-field">
+              <label>Neighborhood *</label>
+              <input type="text" formControlName="neighborhood">
+              <span class="error" *ngIf="isFieldInvalid(boletoAddressGroup!.get('neighborhood'))">
+                {{ getFieldError(boletoAddressGroup!.get('neighborhood')) }}
+              </span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label>City *</label>
+              <input type="text" formControlName="city">
+              <span class="error" *ngIf="isFieldInvalid(boletoAddressGroup!.get('city'))">
+                {{ getFieldError(boletoAddressGroup!.get('city')) }}
+              </span>
+            </div>
+            <div class="form-field">
+              <label>State *</label>
+              <input type="text" formControlName="state" maxlength="2" placeholder="SP">
+              <span class="error" *ngIf="isFieldInvalid(boletoAddressGroup!.get('state'))">
+                {{ getFieldError(boletoAddressGroup!.get('state')) }}
+              </span>
+            </div>
+            <div class="form-field">
+              <label>ZIP Code *</label>
+              <input type="text" formControlName="zipCode" placeholder="12345-678">
+              <span class="error" *ngIf="isFieldInvalid(boletoAddressGroup!.get('zipCode'))">
+                {{ getFieldError(boletoAddressGroup!.get('zipCode')) }}
+              </span>
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="boleto-info">
+          <p><strong>Important:</strong></p>
+          <ul>
+            <li>Payment due in 3 business days</li>
+            <li>Barcode will be sent to your email</li>
+            <li>Can be paid at any bank or lottery shop</li>
+          </ul>
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- Navigation Buttons -->
+    <div class="navigation-buttons">
+      <button type="button" (click)="previousStep()" [disabled]="currentStep === 0" class="btn-secondary">
+        Previous
+      </button>
+
+      <button *ngIf="currentStep < steps.length - 1" type="button" (click)="nextStep()" class="btn-primary"
+        [disabled]="">
+        Next
+      </button>
+
+      <button *ngIf="currentStep === steps.length - 1" type="submit" class="btn-success">
+        Complete Booking
+      </button>
+    </div>
+  </form>
+</div>
+</div>
