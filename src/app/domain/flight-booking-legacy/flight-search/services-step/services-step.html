@@ -1,0 +1,36 @@
+<fieldset class="form-step" [formGroup]="formGroup()">
+  <legend>Additional Services</legend>
+
+  <fieldset class="service-card" [formGroup]="luggageGroup">
+    <legend>Luggage</legend>
+    <div class="form-row">
+      <div class="form-field">
+        <label>Checked Bags</label>
+        <input type="number" formControlName="checkedBags" min="0" max="5">
+      </div>
+      <div class="form-field">
+        <label>Carry-on Bags</label>
+        <input type="number" formControlName="carryOn" min="1" max="2">
+      </div>
+    </div>
+  </fieldset>
+
+  <div class="service-card">
+    <label class="checkbox-label">
+      <input type="checkbox" formControlName="insurance">
+      <div>
+        <strong>Travel Insurance</strong>
+        <p>Comprehensive coverage for $49.99</p>
+      </div>
+    </label>
+  </div>
+
+  <div class="navigation-buttons">
+    <button type="button" (click)="onPrevious()" class="btn-secondary">
+      Previous
+    </button>
+    <button type="button" (click)="onNext()" class="btn-primary">
+      Next
+    </button>
+  </div>
+</fieldset>

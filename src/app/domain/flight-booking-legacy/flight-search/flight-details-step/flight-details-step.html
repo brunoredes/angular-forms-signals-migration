@@ -1,0 +1,85 @@
+<fieldset class="form-step" [formGroup]="formGroup()">
+  <legend>Flight Details</legend>
+
+  <div class="radio-group">
+    <label>
+      <input type="radio" formControlName="flightType" value="roundtrip">
+      Round Trip
+    </label>
+    <label>
+      <input type="radio" formControlName="flightType" value="oneway">
+      One Way
+    </label>
+  </div>
+
+  <div class="form-row">
+    <div class="form-field">
+      <label>Origin *</label>
+      <input type="text" formControlName="origin" placeholder="São Paulo (GRU)">
+      <span class="error" *ngIf="isFieldInvalid(formGroup().controls.origin)">
+        {{ getFieldError(formGroup().controls.origin) }}
+      </span>
+    </div>
+    <div class="form-field">
+      <label>Destination *</label>
+      <input type="text" formControlName="destination" placeholder="New York (JFK)">
+      <span class="error" *ngIf="isFieldInvalid(formGroup().controls.destination)">
+        {{ getFieldError(formGroup().controls.destination) }}
+      </span>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-field">
+      <label>Departure Date *</label>
+      <input type="date" formControlName="departureDate">
+      <span class="error" *ngIf="isFieldInvalid(formGroup().controls.departureDate)">
+        {{ getFieldError(formGroup().controls.departureDate) }}
+      </span>
+    </div>
+    <div class="form-field" *ngIf="formGroup().controls.flightType.value === 'roundtrip'">
+      <label>Return Date *</label>
+      <input type="date" formControlName="returnDate">
+      <span class="error" *ngIf="formGroup().errors?.['returnDateRequired']">
+        Return date is required for round trip
+      </span>
+      <span class="error" *ngIf="formGroup().errors?.['returnDateInvalid']">
+        Return date must be after departure date
+      </span>
+    </div>
+  </div>
+
+  <fieldset [formGroup]="passengersGroup">
+    <legend>Passengers</legend>
+    <div class="form-row">
+      <div class="form-field">
+        <label>Adults (12+) *</label>
+        <input type="number" formControlName="adults" min="1" max="9">
+      </div>
+      <div class="form-field">
+        <label>Children (2-11)</label>
+        <input type="number" formControlName="children" min="0" max="9">
+      </div>
+      <div class="form-field">
+        <label>Infants (0-2)</label>
+        <input type="number" formControlName="infants" min="0" max="9">
+      </div>
+    </div>
+  </fieldset>
+
+  <div class="form-field">
+    <label>Class *</label>
+    <select formControlName="class">
+      <option value="economy">Economy</option>
+      <option value="premium">Premium Economy</option>
+      <option value="business">Business</option>
+      <option value="first">First Class</option>
+    </select>
+  </div>
+
+  <div class="navigation-buttons">
+    <button type="button" (click)="onNext()" class="btn-primary">
+      Next
+    </button>
+  </div>
+</fieldset>

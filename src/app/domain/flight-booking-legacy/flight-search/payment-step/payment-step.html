@@ -1,0 +1,39 @@
+<fieldset class="form-step" [formGroup]="formGroup()">
+  <legend>Payment Information</legend>
+
+  <div class="form-field">
+    <label>Payment Method *</label>
+    <select formControlName="method" (change)="onMethodChange($any($event.target).value)">
+      <option value="">Select payment method...</option>
+      <option value="credit">Credit Card</option>
+      <option value="debit">Debit Card</option>
+      <option value="pix">PIX</option>
+      <option value="boleto">Boleto Bancário</option>
+    </select>
+    <span class="error" *ngIf="isFieldInvalid(formGroup().controls.method)">
+      {{ getFieldError(formGroup().controls.method) }}
+    </span>
+  </div>
+
+  <!-- Credit/Debit Card Form -->
+  <app-credit-card-form *ngIf="selectedPaymentMethod === 'credit' || selectedPaymentMethod === 'debit'"
+    [formGroup]="formGroup()">
+  </app-credit-card-form>
+
+  <!-- PIX Form -->
+  <app-pix-form *ngIf="selectedPaymentMethod === 'pix'" [formGroup]="formGroup()">
+  </app-pix-form>
+
+  <!-- Boleto Form -->
+  <app-boleto-form *ngIf="selectedPaymentMethod === 'boleto'" [formGroup]="formGroup()">
+  </app-boleto-form>
+
+  <div class="navigation-buttons">
+    <button type="button" (click)="onPrevious()" class="btn-secondary">
+      Previous
+    </button>
+    <button type="button" (click)="onSubmit()" class="btn-success">
+      Complete Booking
+    </button>
+  </div>
+</fieldset>

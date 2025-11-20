@@ -1,0 +1,74 @@
+<fieldset class="form-step">
+  <legend>Passenger Information</legend>
+
+  @for (passenger of passengerDetailsArray().controls; track $index) {
+  <fieldset class="passenger-card" [formGroup]="passenger">
+    <legend>Passenger {{ $index + 1 }} ({{ passenger.controls.type.value }})</legend>
+
+    <div class="form-row">
+      <div class="form-field">
+        <label>First Name *</label>
+        <input type="text" formControlName="firstName">
+        <span class="error" *ngIf="isFieldInvalid(getPassengerControl($index, 'firstName'))">
+          {{ getFieldError(getPassengerControl($index, 'firstName')) }}
+        </span>
+      </div>
+      <div class="form-field">
+        <label>Last Name *</label>
+        <input type="text" formControlName="lastName">
+        <span class="error" *ngIf="isFieldInvalid(getPassengerControl($index, 'lastName'))">
+          {{ getFieldError(getPassengerControl($index, 'lastName')) }}
+        </span>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-field">
+        <label>Date of Birth *</label>
+        <input type="date" formControlName="dateOfBirth">
+        <span class="error" *ngIf="isFieldInvalid(getPassengerControl($index, 'dateOfBirth'))">
+          {{ getFieldError(getPassengerControl($index, 'dateOfBirth')) }}
+        </span>
+      </div>
+      <div class="form-field">
+        <label>Gender *</label>
+        <select formControlName="gender">
+          <option value="">Select...</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+        <span class="error" *ngIf="isFieldInvalid(getPassengerControl($index, 'gender'))">
+          {{ getFieldError(getPassengerControl($index, 'gender')) }}
+        </span>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-field">
+        <label>Passport Number *</label>
+        <input type="text" formControlName="passport" placeholder="ABC123456">
+        <span class="error" *ngIf="isFieldInvalid(getPassengerControl($index, 'passport'))">
+          {{ getFieldError(getPassengerControl($index, 'passport')) }}
+        </span>
+      </div>
+      <div class="form-field">
+        <label>Nationality *</label>
+        <input type="text" formControlName="nationality">
+        <span class="error" *ngIf="isFieldInvalid(getPassengerControl($index, 'nationality'))">
+          {{ getFieldError(getPassengerControl($index, 'nationality')) }}
+        </span>
+      </div>
+    </div>
+  </fieldset>
+  }
+
+  <div class="navigation-buttons">
+    <button type="button" (click)="onPrevious()" class="btn-secondary">
+      Previous
+    </button>
+    <button type="button" (click)="onNext()" class="btn-primary">
+      Next
+    </button>
+  </div>
+</fieldset>
