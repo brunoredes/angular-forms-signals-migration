@@ -7,53 +7,39 @@
     </div>
 
     <!-- Progress Steps -->
-    <ol class="progress-steps">
-      @for (step of steps; track $index; let count = $count) {
-      <li class="step" [class.active]="$index === currentStep" [class.completed]="$index < currentStep"
-        [attr.aria-current]="$index === currentStep ? 'step' : null"
-        [attr.aria-label]="'step ' + ($index + 1) + ' : ' + count">
-        <div class="step-indicator">
-          <span class="material-icons">{{$index + 1}}</span>
-        </div>
-        <span class="step-title">{{ step }}</span>
-        @if($index < steps.length - 1) { <div class="step-line">
-  </div>
-  }
-  </li>
-  }
-  </ol>
+    <app-progress-step [steps]="steps" [currentStep]="currentStep"></app-progress-step>
 
-  <!-- Form Content -->
-  <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+    <!-- Form Content -->
+    <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
 
-    <!-- Step 1: Flight Details -->
-    @if (currentStep === 0) {
-    <app-flight-details-step [formGroup]="flightDetailsGroup" (next)="onFlightDetailsNext()">
-    </app-flight-details-step>
-    }
+      <!-- Step 1: Flight Details -->
+      @if (currentStep === 0) {
+      <app-flight-details-step [formGroup]="flightDetailsGroup" (next)="onFlightDetailsNext()">
+      </app-flight-details-step>
+      }
 
-    <!-- Step 2: Passenger Information -->
-    @if(currentStep === 1) {
-    <app-passenger-details-step [passengerDetailsArray]="passengerDetailsArray" (next)="onPassengerDetailsNext()"
-      (previous)="onPassengerDetailsPrevious()">
-    </app-passenger-details-step>
-    }
+      <!-- Step 2: Passenger Information -->
+      @if(currentStep === 1) {
+      <app-passenger-details-step [passengerDetailsArray]="passengerDetailsArray" (next)="onPassengerDetailsNext()"
+        (previous)="onPassengerDetailsPrevious()">
+      </app-passenger-details-step>
+      }
 
-    <!-- Step 3: Services -->
-    @if(currentStep === 2) {
-    <app-services-step [formGroup]="servicesGroup" (next)="onServicesNext()" (previous)="onServicesPrevious()">
-    </app-services-step>
-    }
+      <!-- Step 3: Services -->
+      @if(currentStep === 2) {
+      <app-services-step [formGroup]="servicesGroup" (next)="onServicesNext()" (previous)="onServicesPrevious()">
+      </app-services-step>
+      }
 
-    <!-- Step 4: Payment -->
-    @if(currentStep === 3) {
-    <app-payment-step [formGroup]="paymentGroup" (methodChange)="onPaymentMethodChange($event)"
-      (previous)="onPaymentPrevious()" (submit)="onSubmit()">
-    </app-payment-step>
-    }
+      <!-- Step 4: Payment -->
+      @if(currentStep === 3) {
+      <app-payment-step [formGroup]="paymentGroup" (methodChange)="onPaymentMethodChange($event)"
+        (previous)="onPaymentPrevious()" (submit)="onSubmit()">
+      </app-payment-step>
+      }
 
-    <!-- Navigation Buttons -->
-    <!-- <div class="navigation-buttons">
+      <!-- Navigation Buttons -->
+      <!-- <div class="navigation-buttons">
       <button type="button" (click)="previousStep()" [disabled]="currentStep === 0" class="btn-secondary">
         Previous
       </button>
@@ -67,6 +53,6 @@
         Complete Booking
       </button>
     </div> -->
-  </form>
-</div>
+    </form>
+  </div>
 </div>

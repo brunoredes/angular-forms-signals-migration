@@ -3,29 +3,33 @@
 
   <div class="radio-group">
     <label>
-      <input type="radio" formControlName="flightType" value="roundtrip">
+      <input type="radio" id="roundtrip" formControlName="flightType" value="roundtrip">
       Round Trip
     </label>
     <label>
-      <input type="radio" formControlName="flightType" value="oneway">
+      <input type="radio" id="oneway" formControlName="flightType" value="oneway">
       One Way
     </label>
   </div>
 
   <div class="form-row">
     <div class="form-field">
-      <label>Origin *</label>
-      <input type="text" formControlName="origin" placeholder="São Paulo (GRU)">
-      <span class="error" *ngIf="isFieldInvalid(formGroup().controls.origin)">
-        {{ getFieldError(formGroup().controls.origin) }}
-      </span>
+      <label for="origin">Origin *</label>
+      <input type="text" id="origin" formControlName="origin" placeholder="São Paulo (GRU)">
+      @if(isFieldInvalid(formGroup().controls.origin)) {
+        <span class="error">
+          {{ getFieldError(formGroup().controls.origin) }}
+        </span>
+      }
     </div>
     <div class="form-field">
-      <label>Destination *</label>
-      <input type="text" formControlName="destination" placeholder="New York (JFK)">
-      <span class="error" *ngIf="isFieldInvalid(formGroup().controls.destination)">
-        {{ getFieldError(formGroup().controls.destination) }}
-      </span>
+      <label for="destination">Destination *</label>
+      <input type="text" id="destination" formControlName="destination" placeholder="New York (JFK)">
+      @if(isFieldInvalid(formGroup().controls.destination)) {
+        <span class="error">
+          {{ getFieldError(formGroup().controls.destination) }}
+        </span>
+      }
     </div>
   </div>
 
@@ -33,43 +37,51 @@
     <div class="form-field">
       <label>Departure Date *</label>
       <input type="date" formControlName="departureDate">
-      <span class="error" *ngIf="isFieldInvalid(formGroup().controls.departureDate)">
-        {{ getFieldError(formGroup().controls.departureDate) }}
-      </span>
+      @if(isFieldInvalid(formGroup().controls.departureDate)) {
+        <span class="error">
+          {{ getFieldError(formGroup().controls.departureDate) }}
+        </span>
+      }
     </div>
-    <div class="form-field" *ngIf="formGroup().controls.flightType.value === 'roundtrip'">
-      <label>Return Date *</label>
-      <input type="date" formControlName="returnDate">
-      <span class="error" *ngIf="formGroup().errors?.['returnDateRequired']">
-        Return date is required for round trip
-      </span>
-      <span class="error" *ngIf="formGroup().errors?.['returnDateInvalid']">
-        Return date must be after departure date
-      </span>
-    </div>
+    @if(formGroup().controls.flightType.value === 'roundtrip') {
+      <div class="form-field">
+        <label>Return Date *</label>
+        <input type="date" formControlName="returnDate">
+        @if (formGroup().errors?.['returnDateRequired']) {
+          <span class="error">
+            Return date is required for round trip
+          </span>
+        }
+        @if (formGroup().errors?.['returnDateInvalid']) {
+          <span class="error">
+            Return date must be after departure date
+          </span>
+        }
+      </div>
+    }
   </div>
 
   <fieldset [formGroup]="passengersGroup">
     <legend>Passengers</legend>
     <div class="form-row">
       <div class="form-field">
-        <label>Adults (12+) *</label>
-        <input type="number" formControlName="adults" min="1" max="9">
+        <label for="adults">Adults (12+) *</label>
+        <input type="number" formControlName="adults" min="1" max="9" id="adults">
       </div>
       <div class="form-field">
-        <label>Children (2-11)</label>
-        <input type="number" formControlName="children" min="0" max="9">
+        <label for="children">Children (2-11)</label>
+        <input type="number" formControlName="children" min="0" max="9" id="children">
       </div>
       <div class="form-field">
-        <label>Infants (0-2)</label>
-        <input type="number" formControlName="infants" min="0" max="9">
+        <label for="infants">Infants (0-2)</label>
+        <input type="number" formControlName="infants" min="0" max="9" id="infants">
       </div>
     </div>
   </fieldset>
 
   <div class="form-field">
-    <label>Class *</label>
-    <select formControlName="class">
+    <label for="travelClass">Class *</label>
+    <select formControlName="class" id="travelClass">
       <option value="economy">Economy</option>
       <option value="premium">Premium Economy</option>
       <option value="business">Business</option>
@@ -78,7 +90,8 @@
   </div>
 
   <div class="navigation-buttons">
-    <button type="button" (click)="onNext()" class="btn-primary">
+    <button type="button" (click)="onNext()" class="btn-primary" aria-label="Go to next step"
+      [disabled]="formGroup().invalid">
       Next
     </button>
   </div>

@@ -1,0 +1,86 @@
+<div class="payment-method-form" [formGroup]="formGroup()">
+  <div class="form-field">
+    <label>Card Number *</label>
+    <input type="text" formControlName="cardNumber" maxlength="16" placeholder="1234567890123456">
+    @if (isFieldInvalid(formGroup().get('cardNumber'))) {
+      <span class="error">
+        {{ getFieldError(formGroup().get('cardNumber')) }}
+      </span>
+    }
+  </div>
+
+  <div class="form-field">
+    <label>Card Holder Name *</label>
+    <input type="text" formControlName="cardHolder" placeholder="John Doe">
+    @if (isFieldInvalid(formGroup().get('cardHolder'))) {
+      <span class="error">
+        {{ getFieldError(formGroup().get('cardHolder')) }}
+      </span>
+    }
+  </div>
+
+  <div class="form-row">
+    <div class="form-field">
+      <label>Expiry Date *</label>
+      <input type="text" formControlName="expiryDate" placeholder="MM/YY" maxlength="5">
+      @if (isFieldInvalid(formGroup().get('expiryDate'))) {
+        <span class="error">
+          {{ getFieldError(formGroup().get('expiryDate')) }}
+        </span>
+      }
+    </div>
+    <div class="form-field">
+      <label>CVV *</label>
+      <input type="text" formControlName="cvv" maxlength="4" placeholder="123">
+      @if (isFieldInvalid(formGroup().get('cvv'))) {
+        <span class="error">
+          {{ getFieldError(formGroup().get('cvv')) }}
+        </span>
+      }
+    </div>
+  </div>
+
+  @if (billingAddressGroup) {
+    <fieldset [formGroup]="billingAddressGroup">
+      <legend>Billing Address</legend>
+      <div class="form-field">
+        <label>Street *</label>
+        <input type="text" formControlName="street">
+        @if (isFieldInvalid(billingAddressGroup.get('street'))) {
+          <span class="error">
+            {{ getFieldError(billingAddressGroup.get('street')) }}
+          </span>
+        }
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label>City *</label>
+          <input type="text" formControlName="city">
+          @if (isFieldInvalid(billingAddressGroup.get('city'))) {
+            <span class="error">
+              {{ getFieldError(billingAddressGroup.get('city')) }}
+            </span>
+          }
+        </div>
+        <div class="form-field">
+          <label>ZIP Code *</label>
+          <input type="text" formControlName="zipCode">
+          @if (isFieldInvalid(billingAddressGroup.get('zipCode'))) {
+            <span class="error">
+              {{ getFieldError(billingAddressGroup.get('zipCode')) }}
+            </span>
+          }
+        </div>
+      </div>
+      <div class="form-field">
+        <label>Country *</label>
+        <input type="text" formControlName="country">
+        @if (isFieldInvalid(billingAddressGroup.get('country'))) {
+          <span class="error">
+            {{ getFieldError(billingAddressGroup.get('country')) }}
+          </span>
+        }
+      </div>
+    </fieldset>
+  }
+</div>

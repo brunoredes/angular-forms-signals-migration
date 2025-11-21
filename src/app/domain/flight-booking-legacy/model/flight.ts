@@ -41,8 +41,24 @@ export interface LuggageForm {
 }
 
 // Payment Types
+export type PaymentMethod = 'credit' | 'debit' | 'pix' | 'boleto';
 export interface PaymentBaseForm {
-  method: FormControl<'credit' | 'debit' | 'pix' | 'boleto' | ''>;
+  method: FormControl<PaymentMethod>;
+}
+
+export interface CardPaymentForm extends PaymentBaseForm {
+  cardType: FormControl<'credit' | 'debit'>;
+  cardNumber: FormControl<string>;
+  cardHolder: FormControl<string>;
+  expiryDate: FormControl<string>;
+  cvv: FormControl<string>;
+  billingAddress: FormGroup<BillingAddressForm>;
+}
+
+export interface PixPaymentControls extends PaymentBaseForm {
+  cpf: FormControl<string>;
+  pixName: FormControl<string>;
+  pixEmail: FormControl<string>;
 }
 
 export interface BillingAddressForm {
@@ -50,6 +66,12 @@ export interface BillingAddressForm {
   city: FormControl<string>;
   country: FormControl<string>;
   zipCode: FormControl<string>;
+}
+
+export interface BoletoPaymentControls extends PaymentBaseForm {
+  boletoDocument: FormControl<string>;
+  boletoName: FormControl<string>;
+  boletoAddress: FormGroup<BoletoAddressForm>;
 }
 
 export interface BoletoAddressForm {
@@ -60,6 +82,13 @@ export interface BoletoAddressForm {
   city: FormControl<string>;
   state: FormControl<string>;
   zipCode: FormControl<string>;
+}
+
+export interface PaymentFormByMethod {
+  credit: CardPaymentForm;
+  debit: CardPaymentForm;
+  pix: PixPaymentControls;
+  boleto: BoletoPaymentControls;
 }
 
 // Root Form Type

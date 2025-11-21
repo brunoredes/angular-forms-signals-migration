@@ -1,13 +1,17 @@
-import { CommonModule } from '@angular/common';
-import { Component, input, output } from '@angular/core';
+
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PaymentBaseForm } from '../../model/flight';
+import { CardForm } from './card-form/card-form';
+import { PixForm } from './pix-form/pix-form';
+import { BoletoForm } from './boleto-form/boleto-form';
 
 @Component({
   selector: 'app-payment-step',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CardForm, PixForm, BoletoForm],
   templateUrl: './payment-step.html',
   styleUrl: './payment-step.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaymentStep {
   formGroup = input.required<FormGroup<PaymentBaseForm>>();

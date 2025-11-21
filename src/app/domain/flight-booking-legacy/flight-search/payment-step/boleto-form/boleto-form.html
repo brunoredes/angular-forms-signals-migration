@@ -1,0 +1,100 @@
+<div class="payment-method-form" [formGroup]="formGroup()">
+  <div class="form-field">
+    <label>CPF/CNPJ *</label>
+    <input type="text" formControlName="boletoDocument" placeholder="12345678901 or 12345678901234">
+    @if (isFieldInvalid(formGroup().get('boletoDocument'))) {
+      <span class="error">
+        {{ getFieldError(formGroup().get('boletoDocument')) }}
+      </span>
+    }
+  </div>
+
+  <div class="form-field">
+    <label>Full Name *</label>
+    <input type="text" formControlName="boletoName" placeholder="Full name as in document">
+    @if (isFieldInvalid(formGroup().get('boletoName'))) {
+      <span class="error">
+        {{ getFieldError(formGroup().get('boletoName')) }}
+      </span>
+    }
+  </div>
+
+  @if (boletoAddressGroup) {
+    <fieldset [formGroup]="boletoAddressGroup">
+      <legend>Address</legend>
+      <div class="form-row">
+        <div class="form-field" style="grid-column: span 2">
+          <label>Street *</label>
+          <input type="text" formControlName="street">
+          @if (isFieldInvalid(boletoAddressGroup.get('street'))) {
+            <span class="error">
+              {{ getFieldError(boletoAddressGroup.get('street')) }}
+            </span>
+          }
+        </div>
+        <div class="form-field">
+          <label>Number *</label>
+          <input type="text" formControlName="number">
+          @if (isFieldInvalid(boletoAddressGroup.get('number'))) {
+            <span class="error">
+              {{ getFieldError(boletoAddressGroup.get('number')) }}
+            </span>
+          }
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label>Complement</label>
+          <input type="text" formControlName="complement" placeholder="Apt, Suite, etc.">
+        </div>
+        <div class="form-field">
+          <label>Neighborhood *</label>
+          <input type="text" formControlName="neighborhood">
+          @if (isFieldInvalid(boletoAddressGroup.get('neighborhood'))) {
+            <span class="error">
+              {{ getFieldError(boletoAddressGroup.get('neighborhood')) }}
+            </span>
+          }
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label>City *</label>
+          <input type="text" formControlName="city">
+          @if (isFieldInvalid(boletoAddressGroup.get('city'))) {
+            <span class="error">
+              {{ getFieldError(boletoAddressGroup.get('city')) }}
+            </span>
+          }
+        </div>
+        <div class="form-field">
+          <label>State *</label>
+          <input type="text" formControlName="state" maxlength="2" placeholder="SP">
+          @if (isFieldInvalid(boletoAddressGroup.get('state'))) {
+            <span class="error">
+              {{ getFieldError(boletoAddressGroup.get('state')) }}
+            </span>
+          }
+        </div>
+        <div class="form-field">
+          <label>ZIP Code *</label>
+          <input type="text" formControlName="zipCode" placeholder="12345-678">
+          @if (isFieldInvalid(boletoAddressGroup.get('zipCode'))) {
+            <span class="error">
+              {{ getFieldError(boletoAddressGroup.get('zipCode')) }}
+            </span>
+          }
+        </div>
+      </div>
+    </fieldset>
+  }
+
+  <div class="boleto-info">
+    <p><strong>Important:</strong></p>
+    <ul>
+      <li>Payment due in 3 business days</li>
+      <li>Barcode will be sent to your email</li>
+      <li>Can be paid at any bank or lottery shop</li>
+    </ul>
+  </div>
+</div>

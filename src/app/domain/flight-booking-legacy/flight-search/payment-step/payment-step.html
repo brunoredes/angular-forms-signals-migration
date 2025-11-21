@@ -10,23 +10,31 @@
       <option value="pix">PIX</option>
       <option value="boleto">Boleto Bancário</option>
     </select>
-    <span class="error" *ngIf="isFieldInvalid(formGroup().controls.method)">
-      {{ getFieldError(formGroup().controls.method) }}
-    </span>
+    @if (isFieldInvalid(formGroup().controls.method)) {
+      <span class="error">
+        {{ getFieldError(formGroup().controls.method) }}
+      </span>
+    }
   </div>
 
   <!-- Credit/Debit Card Form -->
-  <app-credit-card-form *ngIf="selectedPaymentMethod === 'credit' || selectedPaymentMethod === 'debit'"
-    [formGroup]="formGroup()">
-  </app-credit-card-form>
+  @if (selectedPaymentMethod === 'credit' || selectedPaymentMethod === 'debit') {
+    <app-card-form
+      [formGroup]="formGroup()">
+    </app-card-form>
+  }
 
   <!-- PIX Form -->
-  <app-pix-form *ngIf="selectedPaymentMethod === 'pix'" [formGroup]="formGroup()">
-  </app-pix-form>
+  @if (selectedPaymentMethod === 'pix') {
+    <app-pix-form [formGroup]="formGroup()">
+    </app-pix-form>
+  }
 
   <!-- Boleto Form -->
-  <app-boleto-form *ngIf="selectedPaymentMethod === 'boleto'" [formGroup]="formGroup()">
-  </app-boleto-form>
+  @if (selectedPaymentMethod === 'boleto') {
+    <app-boleto-form [formGroup]="formGroup()">
+    </app-boleto-form>
+  }
 
   <div class="navigation-buttons">
     <button type="button" (click)="onPrevious()" class="btn-secondary">

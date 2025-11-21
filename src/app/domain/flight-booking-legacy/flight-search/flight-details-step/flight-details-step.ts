@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FlightDetailsForm, PassengersForm } from '../../model/flight';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-flight-details-step',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './flight-details-step.html',
   styleUrl: './flight-details-step.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
