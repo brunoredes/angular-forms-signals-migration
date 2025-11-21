@@ -1,0 +1,23 @@
+<ol class="progress-steps" role="list">
+  @for (stepState of stepStates(); track stepState.index) {
+  <li class="step" [class.active]="stepState.isActive" [class.completed]="stepState.isCompleted"
+    [class.pending]="stepState.isPending" [attr.aria-current]="stepState.ariaCurrent"
+    [attr.aria-label]="stepState.ariaLabel" role="listitem">
+
+    <div class="step-indicator">
+      @if (stepState.isCompleted) {
+      <span class="checkmark" aria-hidden="true">✓</span>
+      } @else {
+      <span aria-hidden="true">{{ stepState.index + 1 }}</span>
+      }
+    </div>
+
+    <span class="step-title">{{ stepState.label }}</span>
+
+    @if (stepState.index < stepStates().length - 1) { <div class="step-line"
+      [class.completed-line]="stepState.isCompleted">
+      </div>
+      }
+  </li>
+  }
+</ol>

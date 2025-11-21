@@ -1,0 +1,70 @@
+@use '../../../../scss/abstracts/variables' as *;
+
+:host(app-progress-step) {
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif, sans-serif;
+}
+
+.progress-steps {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e0e0e0;
+    position: relative;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    position: relative;
+
+    &.active .step-indicator {
+        background: $color-primary-dark;
+        color: white;
+    }
+
+    &.active:has(.step-indicator) .step-title {
+        font-weight: 700;
+        color: #333;
+    }
+
+    &.completed .step-indicator {
+        background: $color-success;
+        color: white;
+    }
+}
+
+.step-indicator {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+    z-index: 1;
+}
+
+.step-title {
+    color: #33333387;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.step-line {
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    width: 100%;
+    height: 2px;
+    background: #e0e0e0;
+    z-index: 0;
+}
