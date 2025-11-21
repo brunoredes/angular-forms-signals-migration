@@ -13,9 +13,9 @@
   <div class="form-field">
     <label>PIX Key *</label>
     <input type="text" formControlName="pixKey" placeholder="Enter your PIX key">
-    @if (isFieldInvalid(formGroup.get('pixKey'))) {
+    @if (isFieldInvalid(formGroup().get('pixKey'))) {
       <span class="error">
-        {{ getFieldError(formGroup.get('pixKey')) }}
+        {{ getFieldError(formGroup().get('pixKey')) }}
       </span>
     }
   </div>
@@ -23,9 +23,9 @@
   <div class="form-field">
     <label>Full Name *</label>
     <input type="text" formControlName="pixName" placeholder="Full name for PIX">
-    @if (isFieldInvalid(formGroup.get('pixName'))) {
+    @if (isFieldInvalid(formGroup().get('pixName'))) {
       <span class="error">
-        {{ getFieldError(formGroup.get('pixName')) }}
+        {{ getFieldError(formGroup().get('pixName')) }}
       </span>
     }
   </div>
@@ -33,9 +33,9 @@
   <div class="form-field">
     <label>Email (Optional)</label>
     <input type="email" formControlName="pixEmail" placeholder="email@example.com">
-    @if (isFieldInvalid(formGroup.get('pixEmail'))) {
+    @if (isFieldInvalid(formGroup().get('pixEmail'))) {
       <span class="error">
-        {{ getFieldError(formGroup.get('pixEmail')) }}
+        {{ getFieldError(formGroup().get('pixEmail')) }}
       </span>
     }
   </div>

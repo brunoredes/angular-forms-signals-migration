@@ -7,7 +7,7 @@ import { BillingAddressForm } from '../../../model/flight';
   selector: 'app-card-form',
   imports: [ReactiveFormsModule],
   templateUrl: './card-form.html',
-  styleUrl: './card-form.scss',
+  styleUrls: ['./card-form.scss', '../../../shared/flight-booking-shared.styles.scss'],
 })
 export class CardForm {
   formGroup = input.required<FormGroup<any>>();

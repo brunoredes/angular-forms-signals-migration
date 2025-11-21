@@ -5,7 +5,7 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
   selector: 'app-pix-form',
   imports: [ReactiveFormsModule],
   templateUrl: './pix-form.html',
-  styleUrl: './pix-form.scss',
+  styleUrls: ['./pix-form.scss', '../../../shared/flight-booking-shared.styles.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PixForm {

@@ -7,7 +7,7 @@ import { PassengerDetailForm } from '../../model/flight';
   selector: 'app-passenger-details-step',
   imports: [ReactiveFormsModule],
   templateUrl: './passenger-details-step.html',
-  styleUrl: './passenger-details-step.scss',
+  styleUrls: ['./passenger-details-step.scss', '../../shared/flight-booking-shared.styles.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PassengerDetailsStep {

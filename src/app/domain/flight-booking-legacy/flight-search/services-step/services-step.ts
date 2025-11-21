@@ -7,7 +7,7 @@ import { LuggageForm, ServicesForm } from '../../model/flight';
   selector: 'app-services-step',
   imports: [ReactiveFormsModule],
   templateUrl: './services-step.html',
-  styleUrl: './services-step.scss',
+  styleUrls: ['./services-step.scss', '../../shared/flight-booking-shared.styles.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ServicesStep {

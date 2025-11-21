@@ -6,7 +6,7 @@ import { BoletoAddressForm } from '../../../model/flight';
   selector: 'app-boleto-form',
   imports: [ReactiveFormsModule],
   templateUrl: './boleto-form.html',
-  styleUrl: './boleto-form.scss',
+  styleUrls: ['./boleto-form.scss', '../../../shared/flight-booking-shared.styles.scss'],
 })
 export class BoletoForm {
   formGroup = input.required<FormGroup>();

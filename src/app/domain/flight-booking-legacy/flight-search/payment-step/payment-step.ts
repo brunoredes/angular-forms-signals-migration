@@ -10,7 +10,7 @@ import { BoletoForm } from './boleto-form/boleto-form';
   selector: 'app-payment-step',
   imports: [ReactiveFormsModule, CardForm, PixForm, BoletoForm],
   templateUrl: './payment-step.html',
-  styleUrl: './payment-step.scss',
+  styleUrls: ['./payment-step.scss', '../../shared/flight-booking-shared.styles.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaymentStep {

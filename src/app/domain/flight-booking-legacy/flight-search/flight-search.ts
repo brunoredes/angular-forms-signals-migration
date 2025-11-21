@@ -13,7 +13,7 @@ import { ProgressStep } from "../../../shared/components/progress-step/progress-
   selector: 'app-flight-search',
   imports: [FormsModule, ReactiveFormsModule, FlightDetailsStep, PassengerDetailsStep, ServicesStep, PaymentStep, ProgressStep],
   templateUrl: './flight-search.html',
-  styleUrl: './flight-search.scss',
+  styleUrls: ['./flight-search.scss', '../shared/flight-booking-shared.styles.scss'],
   changeDetection: ChangeDetectionStrategy.Default
 })
 export class FlightSearch implements OnInit, OnDestroy {
