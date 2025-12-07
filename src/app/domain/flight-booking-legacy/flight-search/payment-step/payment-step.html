@@ -11,36 +11,35 @@
       <option value="boleto">Boleto Bancário</option>
     </select>
     @if (isFieldInvalid(formGroup().controls.method)) {
-      <span class="error">
-        {{ getFieldError(formGroup().controls.method) }}
-      </span>
+    <span class="error">
+      {{ getFieldError(formGroup().controls.method) }}
+    </span>
     }
   </div>
 
   <!-- Credit/Debit Card Form -->
   @if (selectedPaymentMethod === 'credit' || selectedPaymentMethod === 'debit') {
-    <app-card-form
-      [formGroup]="formGroup()">
-    </app-card-form>
+  <app-card-form [formGroup]="formGroup()">
+  </app-card-form>
   }
 
   <!-- PIX Form -->
   @if (selectedPaymentMethod === 'pix') {
-    <app-pix-form [formGroup]="formGroup()">
-    </app-pix-form>
+  <app-pix-form [formGroup]="formGroup()">
+  </app-pix-form>
   }
 
   <!-- Boleto Form -->
   @if (selectedPaymentMethod === 'boleto') {
-    <app-boleto-form [formGroup]="formGroup()">
-    </app-boleto-form>
+  <app-boleto-form [formGroup]="formGroup()">
+  </app-boleto-form>
   }
 
   <div class="navigation-buttons">
-    <button type="button" (click)="onPrevious()" class="btn-secondary">
+    <button type="button" (click)="onPrevious()" class="btn-secondary" aria-label="Go to previous step">
       Previous
     </button>
-    <button type="button" (click)="onSubmit()" class="btn-success">
+    <button type="button" (click)="onSubmit()" class="btn-success" aria-label="Go to previous step">
       Complete Booking
     </button>
   </div>

@@ -13,6 +13,7 @@ import { FlightDetailsForm, PassengersForm } from '../../model/flight';
 export class FlightDetailsStep {
   formGroup = input.required<FormGroup<FlightDetailsForm>>();;
   next = output();
+  protected minDepartureDate: string = new Date().toISOString().split('T')[0];
 
   onNext(): void {
     if (this.formGroup().valid) {

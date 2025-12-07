@@ -25,7 +25,7 @@
       <div class="form-row">
         <div class="form-field" style="grid-column: span 2">
           <label>Street *</label>
-          <input type="text" formControlName="street">
+          <input type="text" formControlName="street" [disabled]="true">
           @if (isFieldInvalid(boletoAddressGroup.get('street'))) {
             <span class="error">
               {{ getFieldError(boletoAddressGroup.get('street')) }}
@@ -60,7 +60,7 @@
       <div class="form-row">
         <div class="form-field">
           <label>City *</label>
-          <input type="text" formControlName="city">
+          <input type="text" formControlName="city" [disabled]="true">
           @if (isFieldInvalid(boletoAddressGroup.get('city'))) {
             <span class="error">
               {{ getFieldError(boletoAddressGroup.get('city')) }}
@@ -69,7 +69,7 @@
         </div>
         <div class="form-field">
           <label>State *</label>
-          <input type="text" formControlName="state" maxlength="2" placeholder="SP">
+          <input type="text" formControlName="state" maxlength="2" placeholder="SP" [disabled]="true">
           @if (isFieldInvalid(boletoAddressGroup.get('state'))) {
             <span class="error">
               {{ getFieldError(boletoAddressGroup.get('state')) }}
@@ -78,7 +78,7 @@
         </div>
         <div class="form-field">
           <label>ZIP Code *</label>
-          <input type="text" formControlName="zipCode" placeholder="12345-678">
+          <input type="text" formControlName="zipCode" placeholder="12345-678" autofocus>
           @if (isFieldInvalid(boletoAddressGroup.get('zipCode'))) {
             <span class="error">
               {{ getFieldError(boletoAddressGroup.get('zipCode')) }}

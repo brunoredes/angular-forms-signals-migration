@@ -15,49 +15,57 @@
   <div class="form-row">
     <div class="form-field">
       <label for="origin">Origin *</label>
-      <input type="text" id="origin" formControlName="origin" placeholder="São Paulo (GRU)">
+      <input type="text" id="origin" formControlName="origin" placeholder="From?"
+        aria-label="Insert the origin airport code" required aria-required="true" aria-errormessage="originError"
+        [attr.aria-invalid]="isFieldInvalid(formGroup().controls.origin)" pattern="^[A-Z]{3}$">
       @if(isFieldInvalid(formGroup().controls.origin)) {
-        <span class="error">
-          {{ getFieldError(formGroup().controls.origin) }}
-        </span>
+      <span class="error" id="originError" role="status" aria-live="assertive" aria-atomic="true">
+        {{ getFieldError(formGroup().controls.origin) }}
+      </span>
       }
     </div>
     <div class="form-field">
       <label for="destination">Destination *</label>
-      <input type="text" id="destination" formControlName="destination" placeholder="New York (JFK)">
+      <input type="text" id="destination" formControlName="destination" placeholder="Where to?"
+        aria-label="Insert the destination airport code" required aria-required="true" aria-errormessage="destinationError"
+        [attr.aria-invalid]="isFieldInvalid(formGroup().controls.destination)" pattern="^[A-Z]{3}$">
       @if(isFieldInvalid(formGroup().controls.destination)) {
-        <span class="error">
-          {{ getFieldError(formGroup().controls.destination) }}
-        </span>
+      <span class="error" id="destinationError" role="status" aria-live="assertive" aria-atomic="true">
+        {{ getFieldError(formGroup().controls.destination) }}
+      </span>
       }
     </div>
   </div>
 
   <div class="form-row">
     <div class="form-field">
-      <label>Departure Date *</label>
-      <input type="date" formControlName="departureDate">
+      <label for="departureDate">Departure Date *</label>
+      <input type="date" id="departureDate" formControlName="departureDate" aria-label="Select departure date" required
+        aria-required="true" aria-errormessage="departureDateError"
+        [attr.aria-invalid]="isFieldInvalid(formGroup().controls.departureDate)" [min]="minDepartureDate">
       @if(isFieldInvalid(formGroup().controls.departureDate)) {
-        <span class="error">
-          {{ getFieldError(formGroup().controls.departureDate) }}
-        </span>
+      <span class="error" id="departureDateError" role="status" aria-live="assertive" aria-atomic="true">
+        {{ getFieldError(formGroup().controls.departureDate) }}
+      </span>
       }
     </div>
     @if(formGroup().controls.flightType.value === 'roundtrip') {
-      <div class="form-field">
-        <label>Return Date *</label>
-        <input type="date" formControlName="returnDate">
-        @if (formGroup().errors?.['returnDateRequired']) {
-          <span class="error">
-            Return date is required for round trip
-          </span>
-        }
-        @if (formGroup().errors?.['returnDateInvalid']) {
-          <span class="error">
-            Return date must be after departure date
-          </span>
-        }
-      </div>
+    <div class="form-field">
+      <label for="returnDate">Return Date *</label>
+      <input type="date" id="returnDate" formControlName="returnDate" aria-label="Select return date" required
+        aria-required="true" aria-errormessage="returnDateError"
+        [attr.aria-invalid]="isFieldInvalid(formGroup().controls.returnDate)" [min]="formGroup().controls.departureDate.value">
+      @if (formGroup().errors?.['returnDateRequired'] && isFieldInvalid(formGroup().controls.returnDate)) {
+      <span class="error" id="returnDateError" role="status" aria-live="assertive" aria-atomic="true">
+        Return date is required for round trip
+      </span>
+      }
+      @if (formGroup().errors?.['returnDateInvalid']) {
+      <span class="error" id="returnDateError" role="status" aria-live="assertive" aria-atomic="true">
+        Return date must be after departure date
+      </span>
+      }
+    </div>
     }
   </div>
 
@@ -66,11 +74,23 @@
     <div class="form-row">
       <div class="form-field">
         <label for="adults">Adults (12+) *</label>
-        <input type="number" formControlName="adults" min="1" max="9" id="adults">
+        <input type="number" formControlName="adults" min="1" max="9" id="adults" aria-label="Number of adults" required
+          aria-required="true" aria-errormessage="adultsError" [attr.aria-invalid]="isFieldInvalid(passengersGroup.controls.adults)">
+        @if(isFieldInvalid(passengersGroup.controls.adults)) {
+        <span class="error" id="adultsError" role="status" aria-live="assertive" aria-atomic="true">
+          {{ getFieldError(passengersGroup.controls.adults) }}
+        </span>
+        }
       </div>
       <div class="form-field">
         <label for="children">Children (2-11)</label>
-        <input type="number" formControlName="children" min="0" max="9" id="children">
+        <input type="number" formControlName="children" min="0" max="9" id="children" aria-label="Number of children"
+          aria-errormessage="childrenError" [attr.aria-invalid]="isFieldInvalid(passengersGroup.controls.children)">
+        @if(isFieldInvalid(passengersGroup.controls.children)) {
+        <span class="error" id="childrenError" role="status" aria-live="assertive" aria-atomic="true">
+          {{ getFieldError(passengersGroup.controls.children) }}
+        </span>
+        }
       </div>
       <div class="form-field">
         <label for="infants">Infants (0-2)</label>

@@ -37,22 +37,6 @@
         (previous)="onPaymentPrevious()" (submit)="onSubmit()">
       </app-payment-step>
       }
-
-      <!-- Navigation Buttons -->
-      <!-- <div class="navigation-buttons">
-      <button type="button" (click)="previousStep()" [disabled]="currentStep === 0" class="btn-secondary">
-        Previous
-      </button>
-
-      <button *ngIf="currentStep < steps.length - 1" type="button" (click)="nextStep()" class="btn-primary"
-        [disabled]="">
-        Next
-      </button>
-
-      <button *ngIf="currentStep === steps.length - 1" type="submit" class="btn-success">
-        Complete Booking
-      </button>
-    </div> -->
     </form>
   </div>
 </div>

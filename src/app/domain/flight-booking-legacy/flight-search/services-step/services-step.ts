@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { LuggageForm, ServicesForm } from '../../model/flight';
 
-
 @Component({
   selector: 'app-services-step',
   imports: [ReactiveFormsModule],

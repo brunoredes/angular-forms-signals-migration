@@ -91,11 +91,9 @@ export class FlightSearch implements OnInit, OnDestroy {
     return this.fb.group<ServicesForm>({
       luggage: this.fb.group<LuggageForm>({
         checkedBags: this.fb.control(0, {
-
           validators: [Validators.min(0), Validators.max(5)]
         }),
         carryOn: this.fb.control(1, {
-
           validators: [Validators.min(1), Validators.max(2)]
         })
       }),
@@ -107,7 +105,7 @@ export class FlightSearch implements OnInit, OnDestroy {
 
   private createPaymentGroup(): FormGroup<PaymentBaseForm> {
     return this.fb.group<PaymentBaseForm>({
-      method: this.fb.control<'credit' | 'debit' | 'pix' | 'boleto'>('credit', {
+      method: this.fb.control<'credit' | 'debit' | 'pix' | 'boleto' | ''>('', {
         validators: Validators.required
       })
     });
@@ -278,7 +276,6 @@ export class FlightSearch implements OnInit, OnDestroy {
   }
 
   onPaymentMethodChange(method: string): void {
-    // Recreate payment FormGroup based on selected method
     this.bookingForm.setControl('payment', this.createPaymentGroupForMethod(method));
   }
 
@@ -345,16 +342,12 @@ export class FlightSearch implements OnInit, OnDestroy {
   }
 
   private addPixPaymentControls(paymentGroup: FormGroup): void {
-    paymentGroup.addControl('pixKeyType', this.fb.control<'cpf' | 'cnpj' | 'email' | 'phone' | 'random'>('cpf', {
-
+    paymentGroup.addControl('cpf', this.fb.control<string>('', {
       validators: Validators.required
     }));
-    paymentGroup.addControl('pixKey', this.fb.control('', {
-      validators: [Validators.required, Validators.minLength(11)]
-    }));
-    paymentGroup.addControl('pixEmail', this.fb.control('', {
 
-      validators: [Validators.email]
+    paymentGroup.addControl('pixEmail', this.fb.control('', {
+      validators: [Validators.email, Validators.required]
     }));
     paymentGroup.addControl('pixName', this.fb.control('', {
       validators: [Validators.required, Validators.minLength(3)]

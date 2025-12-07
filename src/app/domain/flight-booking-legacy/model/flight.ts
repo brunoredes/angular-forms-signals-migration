@@ -41,7 +41,7 @@ export interface LuggageForm {
 }
 
 // Payment Types
-export type PaymentMethod = 'credit' | 'debit' | 'pix' | 'boleto';
+export type PaymentMethod = 'credit' | 'debit' | 'pix' | 'boleto' | '';
 export interface PaymentBaseForm {
   method: FormControl<PaymentMethod>;
 }
