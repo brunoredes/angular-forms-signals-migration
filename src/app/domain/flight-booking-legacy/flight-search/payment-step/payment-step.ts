@@ -18,6 +18,7 @@ export class PaymentStep {
   methodChange = output<string>();
   previous = output<void>();
   submit = output<void>();
+  boletoZipCodeSearch = output<string>();
 
   onMethodChange(method: string): void {
     this.methodChange.emit(method);
@@ -33,6 +34,10 @@ export class PaymentStep {
     } else {
       this.formGroup().markAllAsTouched();
     }
+  }
+
+  onBoletoZipCodeSearch(zipCode: string): void {
+    this.boletoZipCodeSearch.emit(zipCode);
   }
 
   get selectedPaymentMethod(): string {

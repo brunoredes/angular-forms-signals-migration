@@ -34,7 +34,7 @@
       <!-- Step 4: Payment -->
       @if(currentStep === 3) {
       <app-payment-step [formGroup]="paymentGroup" (methodChange)="onPaymentMethodChange($event)"
-        (previous)="onPaymentPrevious()" (submit)="onSubmit()">
+        (previous)="onPaymentPrevious()" (submit)="onSubmit()" (boletoZipCodeSearch)="onBoletoZipCodeSearch($event)">
       </app-payment-step>
       }
     </form>

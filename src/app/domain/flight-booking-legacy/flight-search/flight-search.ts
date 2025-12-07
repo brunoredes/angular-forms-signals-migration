@@ -1,13 +1,14 @@
 
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, FormsModule, NonNullableFormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
-import { BillingAddressForm, BoletoAddressForm, BookingForm, FlightDetailsForm, LuggageForm, PassengerDetailForm, PassengersForm, PaymentBaseForm, ServicesForm } from '../model/flight';
+import { BillingAddressForm, BoletoAddressForm, BoletoPaymentControls, BookingForm, FlightDetailsForm, LuggageForm, PassengerDetailForm, PassengersForm, PaymentBaseForm, ServicesForm } from '../model/flight';
 import { Subject, takeUntil } from 'rxjs';
 import { FlightDetailsStep } from './flight-details-step/flight-details-step';
 import { PassengerDetailsStep } from './passenger-details-step/passenger-details-step';
 import { ServicesStep } from './services-step/services-step';
 import { PaymentStep } from './payment-step/payment-step';
 import { ProgressStep } from "../../../shared/components/progress-step/progress-step";
+import { Viacep } from '../../../shared/services/viacep';
 
 @Component({
   selector: 'app-flight-search',
@@ -18,6 +19,8 @@ import { ProgressStep } from "../../../shared/components/progress-step/progress-
 })
 export class FlightSearch implements OnInit, OnDestroy {
   private readonly fb = inject(NonNullableFormBuilder);
+  private readonly viaCepService = inject(Viacep);
+
   bookingForm!: FormGroup<BookingForm>;
   currentStep = 0;
   private destroy$ = new Subject<void>();
@@ -281,6 +284,26 @@ export class FlightSearch implements OnInit, OnDestroy {
 
   onPaymentPrevious(): void {
     this.previousStep();
+  }
+
+  onBoletoZipCodeSearch(zipCode: string) {
+    this.viaCepService.getAddress(zipCode)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (address) => {
+          if (address) {
+            const boletoAddressGroup = (this.paymentGroup as any).get('boletoAddress') as BoletoPaymentControls['boletoAddress'];
+            if (boletoAddressGroup) {
+              boletoAddressGroup.patchValue({
+                street: address.logradouro || '',
+                neighborhood: address.bairro || '',
+                city: address.localidade || '',
+                state: address.uf || ''
+              });
+            }
+          }
+        }
+      });
   }
 
   private createPaymentGroupForMethod(method: string): FormGroup {

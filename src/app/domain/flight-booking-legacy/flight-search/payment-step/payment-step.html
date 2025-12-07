@@ -31,7 +31,7 @@
 
   <!-- Boleto Form -->
   @if (selectedPaymentMethod === 'boleto') {
-  <app-boleto-form [formGroup]="formGroup()">
+  <app-boleto-form [formGroup]="formGroup()" (zipCodeSearch)="onBoletoZipCodeSearch($event)">
   </app-boleto-form>
   }
 

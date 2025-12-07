@@ -1,92 +1,105 @@
 <div class="payment-method-form" [formGroup]="formGroup()">
   <div class="form-field">
-    <label>CPF/CNPJ *</label>
-    <input type="text" formControlName="boletoDocument" placeholder="12345678901 or 12345678901234">
+    <label for="documentId">CPF/CNPJ *</label>
+    <input type="text" formControlName="boletoDocument" placeholder="12345678901 or 12345678901234" id="documentId"
+      [attr.aria-invalid]="isFieldInvalid(formGroup().get('boletoDocument'))"
+      aria-label="Insert your CPF or CNPJ document number" aria-errormessage="invalidDocument">
     @if (isFieldInvalid(formGroup().get('boletoDocument'))) {
-      <span class="error">
-        {{ getFieldError(formGroup().get('boletoDocument')) }}
-      </span>
+    <span class="error" role="status" aria-live="assertive" aria-atomic="true" id="invalidDocument">
+      {{ getFieldError(formGroup().get('boletoDocument')) }}
+    </span>
     }
   </div>
 
   <div class="form-field">
-    <label>Full Name *</label>
-    <input type="text" formControlName="boletoName" placeholder="Full name as in document">
+    <label for="nameId">Full Name *</label>
+    <input type="text" formControlName="boletoName" placeholder="Full name as in document" id="nameId"
+      [attr.aria-invalid]="isFieldInvalid(formGroup().get('boletoName'))"
+      aria-label="Insert your full name as in document" aria-errormessage="invalidName">
     @if (isFieldInvalid(formGroup().get('boletoName'))) {
-      <span class="error">
-        {{ getFieldError(formGroup().get('boletoName')) }}
-      </span>
+    <span class="error" role="status" aria-live="assertive" aria-atomic="true" id="invalidName">
+      {{ getFieldError(formGroup().get('boletoName')) }}
+    </span>
     }
   </div>
 
   @if (boletoAddressGroup) {
-    <fieldset [formGroup]="boletoAddressGroup">
-      <legend>Address</legend>
-      <div class="form-row">
-        <div class="form-field" style="grid-column: span 2">
-          <label>Street *</label>
-          <input type="text" formControlName="street" [disabled]="true">
-          @if (isFieldInvalid(boletoAddressGroup.get('street'))) {
-            <span class="error">
-              {{ getFieldError(boletoAddressGroup.get('street')) }}
-            </span>
-          }
-        </div>
-        <div class="form-field">
-          <label>Number *</label>
-          <input type="text" formControlName="number">
-          @if (isFieldInvalid(boletoAddressGroup.get('number'))) {
-            <span class="error">
-              {{ getFieldError(boletoAddressGroup.get('number')) }}
-            </span>
-          }
-        </div>
+  <fieldset [formGroup]="boletoAddressGroup">
+    <legend>Address</legend>
+    <div class="form-row">
+      <div class="form-field" style="grid-column: span 2">
+        <label for="streetId">Street *</label>
+        <input type="text" formControlName="street" [disabled]="true" id="streetId"
+          aria-label="Street name" aria-errormessage="invalidStreet"
+          [attr.aria-invalid]="isFieldInvalid(boletoAddressGroup.get('street'))">
+        @if (isFieldInvalid(boletoAddressGroup.get('street'))) {
+        <span class="error" role="status" aria-live="assertive" aria-atomic="true" id="invalidStreet">
+          {{ getFieldError(boletoAddressGroup.get('street')) }}
+        </span>
+        }
       </div>
-      <div class="form-row">
-        <div class="form-field">
-          <label>Complement</label>
-          <input type="text" formControlName="complement" placeholder="Apt, Suite, etc.">
-        </div>
-        <div class="form-field">
-          <label>Neighborhood *</label>
-          <input type="text" formControlName="neighborhood">
-          @if (isFieldInvalid(boletoAddressGroup.get('neighborhood'))) {
-            <span class="error">
-              {{ getFieldError(boletoAddressGroup.get('neighborhood')) }}
-            </span>
-          }
-        </div>
+      <div class="form-field">
+        <label for="numberId">Number *</label>
+        <input type="text" formControlName="number" id="numberId"
+          aria-label="Street number" aria-errormessage="invalidNumber"
+          [attr.aria-invalid]="isFieldInvalid(boletoAddressGroup.get('number'))">
+        @if (isFieldInvalid(boletoAddressGroup.get('number'))) {
+        <span class="error" role="status" aria-live="assertive" aria-atomic="true" id="invalidNumber">
+          {{ getFieldError(boletoAddressGroup.get('number')) }}
+        </span>
+        }
       </div>
-      <div class="form-row">
-        <div class="form-field">
-          <label>City *</label>
-          <input type="text" formControlName="city" [disabled]="true">
-          @if (isFieldInvalid(boletoAddressGroup.get('city'))) {
-            <span class="error">
-              {{ getFieldError(boletoAddressGroup.get('city')) }}
-            </span>
-          }
-        </div>
-        <div class="form-field">
-          <label>State *</label>
-          <input type="text" formControlName="state" maxlength="2" placeholder="SP" [disabled]="true">
-          @if (isFieldInvalid(boletoAddressGroup.get('state'))) {
-            <span class="error">
-              {{ getFieldError(boletoAddressGroup.get('state')) }}
-            </span>
-          }
-        </div>
-        <div class="form-field">
-          <label>ZIP Code *</label>
-          <input type="text" formControlName="zipCode" placeholder="12345-678" autofocus>
-          @if (isFieldInvalid(boletoAddressGroup.get('zipCode'))) {
-            <span class="error">
-              {{ getFieldError(boletoAddressGroup.get('zipCode')) }}
-            </span>
-          }
-        </div>
+    </div>
+    <div class="form-row">
+      <div class="form-field">
+        <label for="complementId">Complement</label>
+        <input type="text" formControlName="complement" placeholder="Apt, Suite, etc." id="complementId">
       </div>
-    </fieldset>
+      <div class="form-field">
+        <label for="neighborhoodId">Neighborhood *</label>
+        <input type="text" formControlName="neighborhood" id="neighborhoodId"
+          aria-label="Neighborhood" aria-errormessage="invalidNeighborhoodId"
+          [attr.aria-invalid]="isFieldInvalid(boletoAddressGroup.get('neighborhood'))">
+        @if (isFieldInvalid(boletoAddressGroup.get('neighborhood'))) {
+        <app-form-error-message #invalidNeighborhood>
+          {{ getFieldError(boletoAddressGroup.get('neighborhood')) }}
+          </app-form-error-message>
+        }
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-field">
+        <label for="cityId">City *</label>
+        <input type="text" formControlName="city" id="cityId" [disabled]="true"
+          aria-label="City" aria-errormessage="invalidCity"
+          [attr.aria-invalid]="isFieldInvalid(boletoAddressGroup.get('city'))">
+        @if (isFieldInvalid(boletoAddressGroup.get('city'))) {
+        <span class="error" role="status" aria-live="assertive" aria-atomic="true" id="invalidCity">
+          {{ getFieldError(boletoAddressGroup.get('city')) }}
+        </span>
+        }
+      </div>
+      <div class="form-field">
+        <label>State *</label>
+        <input type="text" formControlName="state" maxlength="2" placeholder="SP" [disabled]="true">
+        @if (isFieldInvalid(boletoAddressGroup.get('state'))) {
+        <span class="error">
+          {{ getFieldError(boletoAddressGroup.get('state')) }}
+        </span>
+        }
+      </div>
+      <div class="form-field">
+        <label>ZIP Code *</label>
+        <input type="text" formControlName="zipCode" placeholder="12345-678" autofocus
+          (input)="onZipCodeChange($any($event.target).value)">
+        @if (isFieldInvalid(boletoAddressGroup.get('zipCode'))) {
+        <span class="error">
+          {{ getFieldError(boletoAddressGroup.get('zipCode')) }}
+        </span>
+        }
+      </div>
+    </div>
+  </fieldset>
   }
 
   <div class="boleto-info">

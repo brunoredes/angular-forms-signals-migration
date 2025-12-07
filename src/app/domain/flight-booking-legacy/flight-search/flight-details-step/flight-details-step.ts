@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FlightDetailsForm, PassengersForm } from '../../model/flight';
+import { FormErrorMessage } from '../../../../shared/components/form-error-message/form-error-message';
 
 
 @Component({
   selector: 'app-flight-details-step',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, FormErrorMessage],
   templateUrl: './flight-details-step.html',
   styleUrls: ['./flight-details-step.scss', '../../shared/flight-booking-shared.styles.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

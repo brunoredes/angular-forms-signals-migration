@@ -98,3 +98,14 @@ export interface BookingForm {
   services: FormGroup<ServicesForm>;
   payment: FormGroup<PaymentBaseForm>;
 }
+
+
+export interface BoletoAddress {
+  street: string;
+  number: string;
+  complement: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+  zipCode: string;
+}
