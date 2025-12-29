@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, httpResource, HttpResourceRef } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, map, of } from 'rxjs';
 import { ViaCepResponse } from '../model/viacep-response';
@@ -29,5 +29,20 @@ export class Viacep {
           return of(null);
         })
       );
+  }
+
+  getAddressResource(zipCode: string): HttpResourceRef<ViaCepResponse | undefined> {
+    return httpResource<ViaCepResponse>(
+      () => {
+        const cleanZipCode = zipCode.replace(/\D/g, '');
+
+        // Se CEP inválido, retorna undefined = estado 'idle'
+        if (cleanZipCode.length !== 8) {
+          return undefined;
+        }
+
+        return `${this.BASE_URL}${cleanZipCode}/json/`;
+      }
+    );
   }
 }

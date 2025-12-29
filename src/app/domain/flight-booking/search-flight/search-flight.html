@@ -6,21 +6,19 @@
       <p>Angular Forms Signal Implementation</p>
     </div>
 
-    <!-- Progress Steps -->
-    <app-progress-step [steps]="steps" [currentStep]="currentStep"></app-progress-step>
+    <app-progress-step [steps]="steps" [currentStep]="currentStep()"></app-progress-step>
 
     <!-- Form Content -->
     <form>
 
       <!-- Step 1: Flight Details -->
-      @if (currentStep === 0) {
-      <!-- <app-flight-details-step [formGroup]="flightDetailsGroup" (next)="onFlightDetailsNext()">
-      </app-flight-details-step> -->
-      <span>Details</span>
+      @if (currentStep() === 0) {
+      <app-flight-details-step [flightDetails]="bookingForm.flightDetails" (next)="nextStep()">
+      </app-flight-details-step>
       }
 
       <!-- Step 2: Passenger Information -->
-      @if(currentStep === 1) {
+      @if(currentStep() === 1) {
       <!-- <app-passenger-details-step [passengerDetailsArray]="passengerDetailsArray" (next)="onPassengerDetailsNext()"
         (previous)="onPassengerDetailsPrevious()">
       </app-passenger-details-step> -->
@@ -28,14 +26,14 @@
       }
 
       <!-- Step 3: Services -->
-      @if(currentStep === 2) {
+      @if(currentStep() === 2) {
       <!-- <app-services-step [formGroup]="servicesGroup" (next)="onServicesNext()" (previous)="onServicesPrevious()">
       </app-services-step> -->
       <span>Services</span>
       }
 
       <!-- Step 4: Payment -->
-      @if(currentStep === 3) {
+      @if(currentStep() === 3) {
       <!-- <app-payment-step [formGroup]="paymentGroup" (methodChange)="onPaymentMethodChange($event)"
         (previous)="onPaymentPrevious()" (submit)="onSubmit()" (boletoZipCodeSearch)="onBoletoZipCodeSearch($event)">
       </app-payment-step> -->

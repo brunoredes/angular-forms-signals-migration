@@ -1,0 +1,125 @@
+@let flightDetailsStepForm = flightDetails();
+
+<fieldset class="form-step">
+  <legend>Flight Details</legend>
+
+  <div class="radio-group">
+    <label>
+      <input type="radio" id="roundtrip" [field]="flightDetailsStepForm.flightType" value="roundtrip">
+      Round Trip
+    </label>
+    <label>
+      <input type="radio" id="oneway" [field]="flightDetailsStepForm.flightType" value="oneway">
+      One Way
+    </label>
+  </div>
+
+  <div class="form-row">
+    <div class="form-field">
+      <label for="origin">Origin *</label>
+      <input type="text" id="origin" [field]="flightDetailsStepForm.origin" placeholder="From?"
+        aria-label="Insert the origin airport code" aria-required="true" aria-errormessage="originError"
+        [attr.aria-invalid]="isFieldInvalid(flightDetailsStepForm.origin())">
+      @if(isFieldInvalid(flightDetailsStepForm.origin())) {
+      <app-form-error-message #originError>
+        {{ getFieldError(flightDetailsStepForm.origin()) }}
+      </app-form-error-message>
+      }
+    </div>
+    <div class="form-field">
+      <label for="destination">Destination *</label>
+      <input type="text" id="destination" [field]="flightDetailsStepForm.destination" placeholder="Where to?"
+        aria-label="Insert the destination airport code" aria-required="true" aria-errormessage="destinationError"
+        [attr.aria-invalid]="flightDetailsStepForm.destination().invalid()">
+      @if(isFieldInvalid(flightDetailsStepForm.destination())) {
+      <span class="error" id="destinationError" role="status" aria-live="assertive" aria-atomic="true">
+        {{ getFieldError(flightDetailsStepForm.destination()) }}
+      </span>
+      }
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-field">
+      <label for="departureDate">Departure Date *</label>
+      <input type="date" id="departureDate" [field]="flightDetailsStepForm.departureDate"
+        aria-label="Select departure date" aria-required="true" aria-errormessage="departureDateError"
+        [attr.aria-invalid]="flightDetailsStepForm.departureDate().invalid()">
+      @if(isFieldInvalid(flightDetailsStepForm.departureDate())) {
+      <span class="error" id="departureDateError" role="status" aria-live="assertive" aria-atomic="true">
+        {{ getFieldError(flightDetailsStepForm.departureDate()) }}
+      </span>
+      }
+    </div>
+    @if(flightDetailsStepForm.flightType().value() === 'roundtrip') {
+    <div class="form-field">
+      <label for="returnDate">Return Date *</label>
+      <input type="date" id="returnDate" [field]="flightDetailsStepForm.returnDate" aria-label="Select return date"
+        aria-required="true" aria-errormessage="returnDateError"
+        [attr.aria-invalid]="isFieldInvalid(flightDetailsStepForm.returnDate())">
+      @if (isFieldInvalid(flightDetailsStepForm.returnDate())) {
+      @for (err of flightDetailsStepForm.returnDate().errors(); track $index) {
+      <span class="error" id="returnDateError" role="status" aria-live="assertive" aria-atomic="true">
+        {{err.message}}
+      </span>
+      }
+      }
+    </div>
+    }
+  </div>
+
+  <fieldset>
+    <legend>Passengers</legend>
+    <div class="form-row">
+      <div class="form-field">
+        <label for="adults">Adults (12+) *</label>
+        <input type="number" [field]="flightDetailsStepForm.passengers.adults" id="adults" aria-label="Number of adults"
+          aria-required="true" aria-errormessage="adultsError" aria-required="true" aria-errormessage="adultsError"
+          [attr.aria-invalid]="isFieldInvalid(flightDetailsStepForm.passengers.adults())">
+        @if(isFieldInvalid(flightDetailsStepForm.passengers.adults())) {
+        <span class="error" id="adultsError" role="status" aria-live="assertive" aria-atomic="true">
+          {{ getFieldError(flightDetailsStepForm.passengers.adults()) }}
+        </span>
+        }
+      </div>
+      <div class="form-field">
+        <label for="children">Children (2-11)</label>
+        <input type="number" [field]="flightDetailsStepForm.passengers.children" id="children"
+          aria-label="Number of children" aria-errormessage="childrenError"
+          [attr.aria-invalid]="isFieldInvalid(flightDetailsStepForm.passengers.children())">
+        @if(isFieldInvalid(flightDetailsStepForm.passengers.children())) {
+        <span class="error" id="childrenError" role="status" aria-live="assertive" aria-atomic="true">
+          {{ getFieldError(flightDetailsStepForm.passengers.children()) }}
+        </span>
+        }
+      </div>
+      <div class="form-field">
+        <label for="infants">Infants (0-2)</label>
+        <input type="number" [field]="flightDetailsStepForm.passengers.infants" id="infants"
+          aria-label="Number of infants" aria-errormessage="infantsError"
+          [attr.aria-invalid]="isFieldInvalid(flightDetailsStepForm.passengers.infants())">
+        @if(isFieldInvalid(flightDetailsStepForm.passengers.infants())) {
+        <span class="error" id="infantsError" role="status" aria-live="assertive" aria-atomic="true">
+          {{ getFieldError(flightDetailsStepForm.passengers.infants()) }}
+        </span>
+        }
+      </div>
+    </div>
+  </fieldset>
+
+  <div class="form-field">
+    <label for="travelClass">Class *</label>
+    <select [field]="flightDetailsStepForm.class" id="travelClass">
+      <option value="economy">Economy</option>
+      <option value="premium">Premium Economy</option>
+      <option value="business">Business</option>
+      <option value="first">First Class</option>
+    </select>
+  </div>
+
+  <div class="navigation-buttons">
+    <button type="button" (click)="onNext()" class="btn-primary" aria-label="Go to next step">
+      Next
+    </button>
+  </div>
+</fieldset>
