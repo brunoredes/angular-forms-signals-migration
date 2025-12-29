@@ -26,8 +26,8 @@
 
       <!-- Step 3: Services -->
       @if(currentStep() === 2) {
-      <!-- <app-services-step [formGroup]="servicesGroup" (next)="onServicesNext()" (previous)="onServicesPrevious()">
-      </app-services-step> -->
+      <app-services-step [services]="bookingForm.services" (next)="nextStep()" (previous)="previousStep()">
+      </app-services-step>
       <span>Services</span>
       }
 

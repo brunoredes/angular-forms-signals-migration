@@ -6,10 +6,11 @@ import { BoletoPayment, CardPayment, FLIGHT_TYPE, FlightBooking, PassengerDetail
 import { defaultFlightDetails, defaultPaymentBase, defaultServices } from '../store/flight.store';
 import { FlightDetailsStep } from './flight-details-step/flight-details-step';
 import { PassengerDetailsStep } from './passenger-details-step/passenger-details-step';
+import { ServicesStep } from './services-step/services-step';
 
 @Component({
   selector: 'app-search-flight',
-  imports: [ProgressStep, FlightDetailsStep, PassengerDetailsStep],
+  imports: [ProgressStep, FlightDetailsStep, PassengerDetailsStep, ServicesStep],
   templateUrl: './search-flight.html',
   styleUrl: './search-flight.scss',
 })

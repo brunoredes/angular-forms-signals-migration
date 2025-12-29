@@ -1,0 +1,37 @@
+@let servicesForm = services();
+<fieldset class="form-step">
+  <legend>Additional Services</legend>
+
+  <fieldset class="service-card">
+    <legend>Luggage</legend>
+    <div class="form-row">
+      <div class="form-field">
+        <label for="checkedBags">Checked Bags</label>
+        <input type="number" [field]="servicesForm.luggage.checkedBags" id="checkedBags">
+      </div>
+      <div class="form-field">
+        <label for="carryOn">Carry-on Bags</label>
+        <input type="number" [field]="servicesForm.luggage.carryOn" id="carryOn">
+      </div>
+    </div>
+  </fieldset>
+
+  <div class="service-card">
+    <label class="checkbox-label" for="insurance">
+      <input type="checkbox" [field]="servicesForm.insurance" id="insurance">
+      <div>
+        <strong>Travel Insurance</strong>
+        <p>Comprehensive coverage for $49.99</p>
+      </div>
+    </label>
+  </div>
+
+  <div class="navigation-buttons">
+    <button type="button" (click)="onPrevious()" class="btn-secondary" aria-label="Go to previous step">
+      Previous
+    </button>
+    <button type="button" (click)="onNext()" class="btn-primary" aria-label="Go to next step">
+      Next
+    </button>
+  </div>
+</fieldset>
