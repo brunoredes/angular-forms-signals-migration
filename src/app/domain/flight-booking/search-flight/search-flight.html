@@ -19,10 +19,9 @@
 
       <!-- Step 2: Passenger Information -->
       @if(currentStep() === 1) {
-      <!-- <app-passenger-details-step [passengerDetailsArray]="passengerDetailsArray" (next)="onPassengerDetailsNext()"
-        (previous)="onPassengerDetailsPrevious()">
-      </app-passenger-details-step> -->
-      <span>Passenger</span>
+      <app-passenger-details-step [passengerDetailsArray]="bookingForm.passengerDetails" (next)="nextStep()"
+        (previous)="previousStep()">
+      </app-passenger-details-step>
       }
 
       <!-- Step 3: Services -->

@@ -1,0 +1,108 @@
+@let passengerDetails = passengerDetailsArray();
+<fieldset class="form-step">
+  <legend>Passenger Information</legend>
+
+  @for (passenger of passengerDetails; track $index) {
+  <fieldset class="passenger-card">
+    <legend>Passenger {{ $index + 1 }} ({{ passenger.type().value() }})</legend>
+
+    <div class="form-row">
+      <div class="form-field">
+        <label for="firstName-{{ $index }}">First Name *</label>
+        @let firstNameField = passenger.firstName;
+        <input id="firstName-{{ $index }}" type="text" [field]="firstNameField">
+        @if (firstNameField().invalid() && (firstNameField().dirty() || firstNameField().touched())) {
+        @for (error of firstNameField().errors(); track $index) {
+        <app-form-error-message #firstNameError{{$index}}>
+          {{error.message}}
+        </app-form-error-message>
+        }
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="lastName-{{ $index }}">Last Name *</label>
+        @let lastNameField = passenger.lastName;
+        <input id="lastName-{{ $index }}" type="text" [field]="lastNameField">
+        @if (lastNameField().invalid() && (lastNameField().dirty() || lastNameField().touched())) {
+        @for (error of lastNameField().errors(); track $index) {
+        <app-form-error-message #firstNameError{{$index}}>
+          {{error.message}}
+        </app-form-error-message>
+        }
+        }
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-field">
+        <label for="dateOfBirth-{{ $index }}">Date of Birth *</label>
+        @let dateOfBirthField = passenger.dateOfBirth;
+        <input id="dateOfBirth-{{ $index }}" type="date" [field]="dateOfBirthField">
+        @if (dateOfBirthField().invalid() && (dateOfBirthField().dirty() || dateOfBirthField().touched())) {
+        @for (error of dateOfBirthField().errors(); track $index) {
+        <app-form-error-message #firstNameError{{$index}}>
+          {{error.message}}
+        </app-form-error-message>
+        }
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="gender-{{ $index }}">Gender *</label>
+        @let genderField = passenger.gender;
+        <select id="gender-{{ $index }}" [field]="genderField">
+          <option value="">Select...</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+        @if (genderField().invalid() && (genderField().dirty() || genderField().touched())) {
+        @for (error of genderField().errors(); track $index) {
+        <app-form-error-message #firstNameError{{$index}}>
+          {{error.message}}
+        </app-form-error-message>
+        }
+        }
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-field">
+        <label for="passport-{{ $index }}">Passport Number *</label>
+        @let passportField = passenger.passport;
+        <input id="passport-{{ $index }}" type="text" [field]="passportField" placeholder="AB123456">
+        @if (passportField().invalid() && (passportField().dirty() || passportField().touched())) {
+        @for (error of passportField().errors(); track $index) {
+        <app-form-error-message #firstNameError{{$index}}>
+          {{error.message}}
+        </app-form-error-message>
+        }
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="nationality-{{ $index }}">Nationality *</label>
+        @let nationalityField = passenger.nationality;
+        <input id="nationality-{{ $index }}" type="text" [field]="nationalityField">
+        @if (nationalityField().invalid() && (nationalityField().dirty() || nationalityField().touched())) {
+        @for (error of nationalityField().errors(); track $index) {
+        <app-form-error-message #firstNameError{{$index}}>
+          {{error.message}}
+        </app-form-error-message>
+        }
+        }
+      </div>
+    </div>
+  </fieldset>
+  }
+
+  <div class="navigation-buttons">
+    <button type="button" (click)="onPrevious()" class="btn-secondary" aria-label="Go to previous step">
+      Previous
+    </button>
+    <button type="button" (click)="onNext()" class="btn-primary" aria-label="Go to next step">
+      Next
+    </button>
+  </div>
+</fieldset>

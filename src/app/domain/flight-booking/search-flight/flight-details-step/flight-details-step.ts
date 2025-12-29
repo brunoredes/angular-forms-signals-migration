@@ -12,7 +12,6 @@ import { FlightDetails } from '../../models/flight';
 export class FlightDetailsStep {
   flightDetails = input.required<FieldTree<FlightDetails>>();
   next = output();
-  minimalDate = new Date().toISOString().split('T')[0];
 
   onNext(): void {
     this.next.emit();

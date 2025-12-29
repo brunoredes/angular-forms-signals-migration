@@ -5,10 +5,11 @@ import { Viacep } from '../../../shared/services/viacep';
 import { BoletoPayment, CardPayment, FLIGHT_TYPE, FlightBooking, PassengerDetail, Payment, PixPayment } from '../models/flight';
 import { defaultFlightDetails, defaultPaymentBase, defaultServices } from '../store/flight.store';
 import { FlightDetailsStep } from './flight-details-step/flight-details-step';
+import { PassengerDetailsStep } from './passenger-details-step/passenger-details-step';
 
 @Component({
   selector: 'app-search-flight',
-  imports: [ProgressStep, FlightDetailsStep],
+  imports: [ProgressStep, FlightDetailsStep, PassengerDetailsStep],
   templateUrl: './search-flight.html',
   styleUrl: './search-flight.scss',
 })
@@ -256,7 +257,6 @@ export class SearchFlight {
   });
 
   protected nextStep(): void {
-    console.log(this.currentStep());
     if (!this.currentStepValid()) {
       // Mark all fields in current step as touched to show errors
       this.markCurrentStepAsTouched();
