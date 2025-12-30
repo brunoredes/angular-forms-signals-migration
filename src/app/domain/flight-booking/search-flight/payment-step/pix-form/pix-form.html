@@ -1,0 +1,47 @@
+@let payment = pixPayment();
+<div class="payment-method-form">
+  <div class="form-field">
+    <label for="pixCpf">CPF *</label>
+    @let cpfField = payment.cpf;
+    <input 
+      id="pixCpf" 
+      type="text" 
+      [field]="cpfField" 
+      placeholder="000.000.000-00">
+    @if (isFieldInvalid(cpfField)) {
+      <span class="error">
+        {{ getFieldError(cpfField) }}
+      </span>
+    }
+  </div>
+
+  <div class="form-field">
+    <label for="pixName">Full Name *</label>
+    @let pixNameField = payment.pixName;
+    <input 
+      id="pixName" 
+      type="text" 
+      [field]="pixNameField" 
+      placeholder="John Doe">
+    @if (isFieldInvalid(pixNameField)) {
+      <span class="error">
+        {{ getFieldError(pixNameField) }}
+      </span>
+    }
+  </div>
+
+  <div class="form-field">
+    <label for="pixEmail">Email *</label>
+    @let pixEmailField = payment.pixEmail;
+    <input 
+      id="pixEmail" 
+      type="email" 
+      [field]="pixEmailField" 
+      placeholder="john@example.com">
+    @if (isFieldInvalid(pixEmailField)) {
+      <span class="error">
+        {{ getFieldError(pixEmailField) }}
+      </span>
+    }
+  </div>
+</div>

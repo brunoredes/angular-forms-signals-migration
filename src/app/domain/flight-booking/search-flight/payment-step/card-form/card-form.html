@@ -1,0 +1,122 @@
+@let payment = cardPayment();
+<div class="payment-method-form">
+  <div class="form-field">
+    <label for="cardNumber">Card Number *</label>
+    @let cardNumberField = payment.cardNumber;
+    <input 
+      id="cardNumber" 
+      type="text" 
+      [field]="cardNumberField" 
+      placeholder="1234567890123456">
+    @if (isFieldInvalid(cardNumberField)) {
+      <span class="error">
+        {{ getFieldError(cardNumberField) }}
+      </span>
+    }
+  </div>
+
+  <div class="form-field">
+    <label for="cardHolder">Card Holder Name *</label>
+    @let cardHolderField = payment.cardHolder;
+    <input 
+      id="cardHolder" 
+      type="text" 
+      [field]="cardHolderField" 
+      placeholder="John Doe">
+    @if (isFieldInvalid(cardHolderField)) {
+      <span class="error">
+        {{ getFieldError(cardHolderField) }}
+      </span>
+    }
+  </div>
+
+  <div class="form-row">
+    <div class="form-field">
+      <label for="expiryDate">Expiry Date *</label>
+      @let expiryDateField = payment.expiryDate;
+      <input 
+        id="expiryDate" 
+        type="text" 
+        [field]="expiryDateField" 
+        placeholder="MM/YY">
+      @if (isFieldInvalid(expiryDateField)) {
+        <span class="error">
+          {{ getFieldError(expiryDateField) }}
+        </span>
+      }
+    </div>
+    <div class="form-field">
+      <label for="cvv">CVV *</label>
+      @let cvvField = payment.cvv;
+      <input 
+        id="cvv" 
+        type="text" 
+        [field]="cvvField" 
+        placeholder="123">
+      @if (isFieldInvalid(cvvField)) {
+        <span class="error">
+          {{ getFieldError(cvvField) }}
+        </span>
+      }
+    </div>
+  </div>
+
+  @let billingAddress = payment.billingAddress;
+  <fieldset>
+    <legend>Billing Address</legend>
+    <div class="form-field">
+      <label for="street">Street *</label>
+      @let streetField = billingAddress.street;
+      <input 
+        id="street" 
+        type="text" 
+        [field]="streetField">
+      @if (isFieldInvalid(streetField)) {
+        <span class="error">
+          {{ getFieldError(streetField) }}
+        </span>
+      }
+    </div>
+    <div class="form-row">
+      <div class="form-field">
+        <label for="city">City *</label>
+        @let cityField = billingAddress.city;
+        <input 
+          id="city" 
+          type="text" 
+          [field]="cityField">
+        @if (isFieldInvalid(cityField)) {
+          <span class="error">
+            {{ getFieldError(cityField) }}
+          </span>
+        }
+      </div>
+      <div class="form-field">
+        <label for="zipCode">ZIP Code *</label>
+        @let zipCodeField = billingAddress.zipCode;
+        <input 
+          id="zipCode" 
+          type="text" 
+          [field]="zipCodeField">
+        @if (isFieldInvalid(zipCodeField)) {
+          <span class="error">
+            {{ getFieldError(zipCodeField) }}
+          </span>
+        }
+      </div>
+    </div>
+    <div class="form-field">
+      <label for="country">Country *</label>
+      @let countryField = billingAddress.country;
+      <input 
+        id="country" 
+        type="text" 
+        [field]="countryField">
+      @if (isFieldInvalid(countryField)) {
+        <span class="error">
+          {{ getFieldError(countryField) }}
+        </span>
+      }
+    </div>
+  </fieldset>
+</div>

@@ -10,33 +10,29 @@
 
     <!-- Form Content -->
     <form>
-
-      <!-- Step 1: Flight Details -->
-      @if (currentStep() === 0) {
-      <app-flight-details-step [flightDetails]="bookingForm.flightDetails" (next)="nextStep()">
-      </app-flight-details-step>
-      }
-
-      <!-- Step 2: Passenger Information -->
-      @if(currentStep() === 1) {
-      <app-passenger-details-step [passengerDetailsArray]="bookingForm.passengerDetails" (next)="nextStep()"
-        (previous)="previousStep()">
-      </app-passenger-details-step>
-      }
-
-      <!-- Step 3: Services -->
-      @if(currentStep() === 2) {
-      <app-services-step [services]="bookingForm.services" (next)="nextStep()" (previous)="previousStep()">
-      </app-services-step>
-      <span>Services</span>
-      }
-
-      <!-- Step 4: Payment -->
-      @if(currentStep() === 3) {
-      <!-- <app-payment-step [formGroup]="paymentGroup" (methodChange)="onPaymentMethodChange($event)"
-        (previous)="onPaymentPrevious()" (submit)="onSubmit()" (boletoZipCodeSearch)="onBoletoZipCodeSearch($event)">
-      </app-payment-step> -->
-      <span>Payment</span>
+      @switch (currentStep()) {
+        @case (0) {
+          <!-- Step 1: Flight Details -->
+          <app-flight-details-step [flightDetails]="bookingForm.flightDetails" (next)="nextStep()">
+          </app-flight-details-step>
+        }
+        @case (1) {
+          <!-- Step 2: Passenger Information -->
+          <app-passenger-details-step [passengerDetailsArray]="bookingForm.passengerDetails" (next)="nextStep()"
+            (previous)="previousStep()">
+          </app-passenger-details-step>
+        }
+        @case (2) {
+          <!-- Step 3: Services -->
+          <app-services-step [services]="bookingForm.services" (next)="nextStep()" (previous)="previousStep()">
+          </app-services-step>
+        }
+        @case (3) {
+          <!-- Step 4: Payment -->
+          <app-payment-step [paymentForm]="bookingForm.payment" (methodChange)="onPaymentMethodChange($event)"
+            (previous)="previousStep()" (submit)="onSubmit()" (boletoZipCodeSearch)="onBoletoZipCodeSearch($event)">
+          </app-payment-step>
+        }
       }
     </form>
   </div>

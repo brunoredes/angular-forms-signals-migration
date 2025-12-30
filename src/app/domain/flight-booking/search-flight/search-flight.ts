@@ -7,10 +7,11 @@ import { defaultFlightDetails, defaultPaymentBase, defaultServices } from '../st
 import { FlightDetailsStep } from './flight-details-step/flight-details-step';
 import { PassengerDetailsStep } from './passenger-details-step/passenger-details-step';
 import { ServicesStep } from './services-step/services-step';
+import { PaymentStep } from './payment-step/payment-step';
 
 @Component({
   selector: 'app-search-flight',
-  imports: [ProgressStep, FlightDetailsStep, PassengerDetailsStep, ServicesStep],
+  imports: [ProgressStep, FlightDetailsStep, PassengerDetailsStep, ServicesStep, PaymentStep],
   templateUrl: './search-flight.html',
   styleUrl: './search-flight.scss',
 })

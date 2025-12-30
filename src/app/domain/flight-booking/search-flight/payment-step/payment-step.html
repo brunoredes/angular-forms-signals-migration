@@ -1,0 +1,52 @@
+@let payment = paymentForm();
+<fieldset class="form-step">
+  <legend>Payment Information</legend>
+
+  <div class="form-field">
+    <label for="paymentMethod">Payment Method *</label>
+    <select 
+      id="paymentMethod"
+      [field]="payment.method" 
+      (change)="onMethodChange(selectedMethod())">
+      <option value="">Select payment method...</option>
+      <option value="credit">Credit Card</option>
+      <option value="debit">Debit Card</option>
+      <option value="pix">PIX</option>
+      <option value="boleto">Boleto Bancário</option>
+    </select>
+  </div>
+
+  <!-- Credit/Debit Card Form -->
+  @if (selectedMethod() === 'credit' || selectedMethod() === 'debit') {
+    <app-card-form [cardPayment]="cardPaymentForm" />
+  }
+
+  <!-- PIX Form -->
+  @if (selectedMethod() === 'pix') {
+    <app-pix-form [pixPayment]="pixPaymentForm" />
+  }
+
+  <!-- Boleto Form -->
+  @if (selectedMethod() === 'boleto') {
+    <app-boleto-form 
+      [boletoPayment]="boletoPaymentForm" 
+      (zipCodeSearch)="onBoletoZipCodeSearch($event)" />
+  }
+
+  <div class="navigation-buttons">
+    <button 
+      type="button" 
+      (click)="onPrevious()" 
+      class="btn-secondary" 
+      aria-label="Go to previous step">
+      Previous
+    </button>
+    <button 
+      type="button" 
+      (click)="onNext()" 
+      class="btn-success" 
+      aria-label="Complete booking">
+      Complete Booking
+    </button>
+  </div>
+</fieldset>

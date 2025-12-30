@@ -1,0 +1,152 @@
+@let payment = boletoPayment();
+<div class="payment-method-form">
+  <div class="form-field">
+    <label for="documentId">CPF/CNPJ *</label>
+    @let docField = payment.boletoDocument;
+    <input 
+      id="documentId" 
+      type="text" 
+      [field]="docField" 
+      placeholder="12345678901 or 12345678901234"
+      [attr.aria-invalid]="isFieldInvalid(docField)"
+      aria-label="Insert your CPF or CNPJ document number" 
+      aria-errormessage="invalidDocument">
+    @if (isFieldInvalid(docField)) {
+      <span class="error" role="status" aria-live="assertive" aria-atomic="true" id="invalidDocument">
+        {{ getFieldError(docField) }}
+      </span>
+    }
+  </div>
+
+  <div class="form-field">
+    <label for="nameId">Full Name *</label>
+    @let nameField = payment.boletoName;
+    <input 
+      id="nameId" 
+      type="text" 
+      [field]="nameField" 
+      placeholder="Full name as in document"
+      [attr.aria-invalid]="isFieldInvalid(nameField)"
+      aria-label="Insert your full name as in document" 
+      aria-errormessage="invalidName">
+    @if (isFieldInvalid(nameField)) {
+      <span class="error" role="status" aria-live="assertive" aria-atomic="true" id="invalidName">
+        {{ getFieldError(nameField) }}
+      </span>
+    }
+  </div>
+
+  @let address = payment.boletoAddress;
+  <fieldset>
+    <legend>Address</legend>
+    <div class="form-row">
+      <div class="form-field" style="grid-column: span 2">
+        <label for="streetId">Street *</label>
+        @let streetField = address.street;
+        <input 
+          id="streetId" 
+          type="text" 
+          [field]="streetField" 
+          aria-label="Street name" 
+          aria-errormessage="invalidStreet"
+          [attr.aria-invalid]="isFieldInvalid(streetField)">
+        @if (isFieldInvalid(streetField)) {
+          <span class="error" role="status" aria-live="assertive" aria-atomic="true" id="invalidStreet">
+            {{ getFieldError(streetField) }}
+          </span>
+        }
+      </div>
+      <div class="form-field">
+        <label for="numberId">Number *</label>
+        @let numberField = address.number;
+        <input 
+          id="numberId" 
+          type="text" 
+          [field]="numberField"
+          aria-label="Street number" 
+          aria-errormessage="invalidNumber"
+          [attr.aria-invalid]="isFieldInvalid(numberField)">
+        @if (isFieldInvalid(numberField)) {
+          <span class="error" role="status" aria-live="assertive" aria-atomic="true" id="invalidNumber">
+            {{ getFieldError(numberField) }}
+          </span>
+        }
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-field">
+        <label for="complementId">Complement</label>
+        @let complementField = address.complement;
+        <input 
+          id="complementId" 
+          type="text" 
+          [field]="complementField" 
+          placeholder="Apt, Suite, etc.">
+      </div>
+      <div class="form-field">
+        <label for="neighborhoodId">Neighborhood *</label>
+        @let neighborhoodField = address.neighborhood;
+        <input 
+          id="neighborhoodId" 
+          type="text" 
+          [field]="neighborhoodField"
+          aria-label="Neighborhood" 
+          aria-errormessage="invalidNeighborhoodId"
+          [attr.aria-invalid]="isFieldInvalid(neighborhoodField)">
+        @if (isFieldInvalid(neighborhoodField)) {
+          <span class="error" role="status" aria-live="assertive" aria-atomic="true" id="invalidNeighborhoodId">
+            {{ getFieldError(neighborhoodField) }}
+          </span>
+        }
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-field">
+        <label for="cityId">City *</label>
+        @let cityField = address.city;
+        <input 
+          id="cityId" 
+          type="text" 
+          [field]="cityField" 
+          aria-label="City" 
+          aria-errormessage="invalidCity"
+          [attr.aria-invalid]="isFieldInvalid(cityField)">
+        @if (isFieldInvalid(cityField)) {
+          <span class="error" role="status" aria-live="assertive" aria-atomic="true" id="invalidCity">
+            {{ getFieldError(cityField) }}
+          </span>
+        }
+      </div>
+      <div class="form-field">
+        <label for="stateId">State *</label>
+        @let stateField = address.state;
+        <input 
+          id="stateId" 
+          type="text" 
+          [field]="stateField" 
+          placeholder="SP">
+        @if (isFieldInvalid(stateField)) {
+          <span class="error">
+            {{ getFieldError(stateField) }}
+          </span>
+        }
+      </div>
+      <div class="form-field">
+        <label for="zipCodeId">ZIP Code *</label>
+        @let zipCodeField = address.zipCode;
+        <input 
+          id="zipCodeId" 
+          type="text" 
+          [field]="zipCodeField" 
+          placeholder="12345-678" 
+          autofocus
+          (input)="onZipCodeChange($any($event.target).value)">
+        @if (isFieldInvalid(zipCodeField)) {
+          <span class="error">
+            {{ getFieldError(zipCodeField) }}
+          </span>
+        }
+      </div>
+    </div>
+  </fieldset>
+</div>
