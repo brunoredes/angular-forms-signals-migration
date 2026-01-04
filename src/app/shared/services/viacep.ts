@@ -31,18 +31,4 @@ export class Viacep {
       );
   }
 
-  getAddressResource(zipCode: string): HttpResourceRef<ViaCepResponse | undefined> {
-    return httpResource<ViaCepResponse>(
-      () => {
-        const cleanZipCode = zipCode.replace(/\D/g, '');
-
-        // Se CEP inválido, retorna undefined = estado 'idle'
-        if (cleanZipCode.length !== 8) {
-          return undefined;
-        }
-
-        return `${this.BASE_URL}${cleanZipCode}/json/`;
-      }
-    );
-  }
 }

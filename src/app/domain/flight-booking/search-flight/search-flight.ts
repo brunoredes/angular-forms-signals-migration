@@ -1,5 +1,5 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { applyEach, form, max, maxLength, min, minLength, pattern, required, schema, validate } from '@angular/forms/signals';
+import { applyEach, debounce, disabled, form, max, maxLength, min, minLength, PathKind, pattern, required, schema, SchemaPathTree, validate } from '@angular/forms/signals';
 import { ProgressStep } from '../../../shared/components/progress-step/progress-step';
 import { Viacep } from '../../../shared/services/viacep';
 import { BoletoPayment, CardPayment, FLIGHT_TYPE, FlightBooking, PassengerDetail, Payment, PixPayment } from '../models/flight';
@@ -13,7 +13,7 @@ import { PaymentStep } from './payment-step/payment-step';
   selector: 'app-search-flight',
   imports: [ProgressStep, FlightDetailsStep, PassengerDetailsStep, ServicesStep, PaymentStep],
   templateUrl: './search-flight.html',
-  styleUrl: './search-flight.scss',
+  styleUrls: ['./search-flight.scss', '../../flight-booking-legacy/shared/flight-booking-shared.styles.scss'],
 })
 export class SearchFlight {
   private readonly viaCepService = inject(Viacep);
@@ -232,6 +232,19 @@ export class SearchFlight {
     // Note: In Signal Forms, we handle dynamic fields differently
     // The payment object structure changes based on method selection
     // This will be handled in the template with conditional rendering
+    const boletoPayment = schemaPath.payment as SchemaPathTree<BoletoPayment, PathKind.Child>
+
+    disabled(boletoPayment.boletoAddress.street);
+    disabled(boletoPayment.boletoAddress.neighborhood);
+    disabled(boletoPayment.boletoAddress.city);
+    disabled(boletoPayment.boletoAddress.state);
+
+    pattern(boletoPayment.boletoAddress.zipCode, /^\d{5}-?\d{3}$/, {
+      message: 'Invalid ZIP code format'
+    });
+
+    debounce(boletoPayment.boletoAddress.zipCode, 200);
+
   });
 
   protected readonly totalPassengers = computed(() => {
@@ -409,29 +422,29 @@ export class SearchFlight {
   // ============================================================================
 
   protected async onBoletoZipCodeSearch(zipCode: string): Promise<void> {
-    try {
-      const address = this.viaCepService.getAddressResource(zipCode);
+    this.viaCepService.getAddress(zipCode).subscribe({
+      next: value => {
 
-      if (address.value() && this.bookingModel().payment.method === 'boleto') {
-        const currentPayment = this.bookingModel().payment as BoletoPayment;
+        if (value && this.bookingModel().payment.method === 'boleto') {
+          const currentPayment = this.bookingModel().payment as BoletoPayment;
 
-        this.bookingModel.update(current => ({
-          ...current,
-          payment: {
-            ...currentPayment,
-            boletoAddress: {
-              ...currentPayment.boletoAddress,
-              street: address.value()?.logradouro || '',
-              neighborhood: address.value()?.bairro || '',
-              city: address.value()?.localidade || '',
-              state: address.value()?.uf || ''
+          this.bookingModel.update(current => ({
+            ...current,
+            payment: {
+              ...currentPayment,
+              boletoAddress: {
+                ...currentPayment.boletoAddress,
+                street: value.logradouro || '',
+                neighborhood: value.bairro || '',
+                city: value.localidade || '',
+                state: value.uf || ''
+              }
             }
-          }
-        }));
+          }));
+        }
       }
-    } catch (error) {
-      console.error('Error fetching address:', error);
-    }
+    });
+
   }
 
   // ============================================================================

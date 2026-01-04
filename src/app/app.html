@@ -1,1 +1,11 @@
-<router-outlet></router-outlet>
+<aside role="complementary" aria-label="Flight Booking Navigation">
+  <nav>
+    <ul>
+      <li> <a routerLink="legacy/flights/search" routerLinkActive="active">Flight Booking Reactive Forms</a></li>
+      <li><a routerLink="flights/search" routerLinkActive="active">Flight Booking Signals Forms</a></li>
+    </ul>
+  </nav>
+</aside>
+<main>
+  <router-outlet></router-outlet>
+</main>

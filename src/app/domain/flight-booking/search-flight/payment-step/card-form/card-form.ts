@@ -7,7 +7,7 @@ import { isFieldInvalid, getFieldError } from '../../../../../shared/utils/form-
   selector: 'app-card-form',
   imports: [Field],
   templateUrl: './card-form.html',
-  styleUrl: './card-form.scss',
+  styleUrls: ['./card-form.scss', '../../../../flight-booking-legacy/shared/flight-booking-shared.styles.scss'],
 })
 export class CardForm {
   cardPayment = input.required<FieldTree<CardPayment>>();

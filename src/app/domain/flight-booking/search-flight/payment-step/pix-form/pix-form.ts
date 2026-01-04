@@ -7,7 +7,7 @@ import { isFieldInvalid, getFieldError } from '../../../../../shared/utils/form-
   selector: 'app-pix-form',
   imports: [Field],
   templateUrl: './pix-form.html',
-  styleUrl: './pix-form.scss',
+  styleUrls: ['./pix-form.scss', '../../../../flight-booking-legacy/shared/flight-booking-shared.styles.scss'],
 })
 export class PixForm {
   pixPayment = input.required<FieldTree<PixPayment>>();

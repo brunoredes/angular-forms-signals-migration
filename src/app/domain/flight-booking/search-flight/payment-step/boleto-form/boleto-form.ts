@@ -7,14 +7,11 @@ import { isFieldInvalid, getFieldError } from '../../../../../shared/utils/form-
   selector: 'app-boleto-form',
   imports: [Field],
   templateUrl: './boleto-form.html',
-  styleUrl: './boleto-form.scss',
+  styleUrls: ['./boleto-form.scss', '../../../../flight-booking-legacy/shared/flight-booking-shared.styles.scss'],
 })
 export class BoletoForm {
   boletoPayment = input.required<FieldTree<BoletoPayment>>();
   zipCodeSearch = output<string>();
-
-  private lastZipCode = signal('');
-  private debounceTimer: number | null = null;
 
   // Re-export utility functions for template use
   protected readonly isFieldInvalid = isFieldInvalid;
@@ -22,17 +19,6 @@ export class BoletoForm {
 
   onZipCodeChange(zipCode: string): void {
     const cleanZipCode = zipCode.replace(/\D/g, '');
-    
-    // Debounce logic
-    if (this.debounceTimer !== null) {
-      clearTimeout(this.debounceTimer);
-    }
-
-    this.debounceTimer = window.setTimeout(() => {
-      if (cleanZipCode.length === 8 && cleanZipCode !== this.lastZipCode()) {
-        this.lastZipCode.set(cleanZipCode);
-        this.zipCodeSearch.emit(cleanZipCode);
-      }
-    }, 200);
+    this.zipCodeSearch.emit(cleanZipCode);
   }
 }

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
-import { FormArray, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, FormArray, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PassengerDetailForm } from '../../model/flight';
 
 
@@ -31,11 +31,11 @@ export class PassengerDetailsStep {
     return this.passengerDetailsArray().at(index).get(field);
   }
 
-  isFieldInvalid(control: any): boolean {
+  isFieldInvalid(control: AbstractControl<PassengerDetailForm>): boolean {
     return !!(control && control.invalid && (control.dirty || control.touched));
   }
 
-  getFieldError(control: any): string {
+  getFieldError(control: AbstractControl<PassengerDetailForm>): string {
     if (!control || !control.errors) return '';
 
     if (control.errors['required']) return 'This field is required';

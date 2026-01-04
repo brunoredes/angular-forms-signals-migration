@@ -9,7 +9,7 @@ import { BoletoForm } from './boleto-form/boleto-form';
   selector: 'app-payment-step',
   imports: [Field, CardForm, PixForm, BoletoForm],
   templateUrl: './payment-step.html',
-  styleUrl: './payment-step.scss',
+  styleUrls: ['./payment-step.scss', '../../../flight-booking-legacy/shared/flight-booking-shared.styles.scss'],
 })
 export class PaymentStep {
   paymentForm = input.required<FieldTree<Payment>>();
