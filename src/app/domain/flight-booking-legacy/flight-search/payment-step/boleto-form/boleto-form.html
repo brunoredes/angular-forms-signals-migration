@@ -29,7 +29,7 @@
     <div class="form-row">
       <div class="form-field" style="grid-column: span 2">
         <label for="streetId">Street *</label>
-        <input type="text" formControlName="street" [disabled]="true" id="streetId"
+        <input type="text" formControlName="street" [readonly]="true" id="streetId"
           aria-label="Street name" aria-errormessage="invalidStreet"
           [attr.aria-invalid]="isFieldInvalid(boletoAddressGroup.get('street'))">
         @if (isFieldInvalid(boletoAddressGroup.get('street'))) {
@@ -70,7 +70,7 @@
     <div class="form-row">
       <div class="form-field">
         <label for="cityId">City *</label>
-        <input type="text" formControlName="city" id="cityId" [disabled]="true"
+        <input type="text" formControlName="city" id="cityId" [readonly]="true"
           aria-label="City" aria-errormessage="invalidCity"
           [attr.aria-invalid]="isFieldInvalid(boletoAddressGroup.get('city'))">
         @if (isFieldInvalid(boletoAddressGroup.get('city'))) {
@@ -81,7 +81,7 @@
       </div>
       <div class="form-field">
         <label>State *</label>
-        <input type="text" formControlName="state" maxlength="2" placeholder="SP" [disabled]="true">
+        <input type="text" formControlName="state" maxlength="2" placeholder="SP" [readonly]="true">
         @if (isFieldInvalid(boletoAddressGroup.get('state'))) {
         <span class="error">
           {{ getFieldError(boletoAddressGroup.get('state')) }}
